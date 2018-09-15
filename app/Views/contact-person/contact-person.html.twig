@@ -1,0 +1,7 @@
+{% if contactPersons is not null %}
+    {% for contact in contactPersons %}
+        <option value="{{ contact.id }}">
+            {{ contact.dial_number.dial_number ~ contact.phone_number ~ ' - ' ~ contact.name ~ ' ' ~ contact.surname }}
+        </option>
+    {% endfor %}
+{% endif %}

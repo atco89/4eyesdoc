@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+    <link type="text/css" rel="stylesheet" href="css/iris-apk-style.css">
+    <link type="text/css" rel="stylesheet" href="css/error.css">
+{% endblock %}
+{% block container %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="text-center">404</h1>
+            <h2 class="text-center">Nismo uspeli da pronađemo stranicu</h2><hr/>
+            <p class="text-center">Stranica koju tražite ne postoji ili je došlo do neke greške,
+                <a href="{{ path_for('appointment.index') }}" title="idi na početnu">idi na početnu stranu</a>.
+            </p>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+    <link type="text/css" rel="stylesheet" href="css/libs/bootstrap-select.min.css">
+    <link type="text/css" rel="stylesheet" href="css/libs/bootstrap-datepicker3.standalone.min.css">
+    <link type="text/css" rel="stylesheet" href="css/libs/jquery.datetimepicker.min.css">
+    <link type="text/css" rel="stylesheet" href="css/checkbox-bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="css/iris-apk-style.css">
+    <link type="text/css" rel="stylesheet" href="css/cardboard.css">
+    <link type="text/css" rel="stylesheet" href="css/examination.css">
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="js/libs/bootstrap-select.js"></script>
+    <script type="text/javascript" src="js/libs/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="js/4eyesdoc.1.0.0.min.js"></script>
+    <script type="text/javascript" src="js/default.js"></script>
+    <script type="text/javascript" src="js/examination.js"></script>
+{% endblock %}
+{% block container %}
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-12">
+                <ul id="examination-steps" class="nav nav-pills nav-stacked navbar-fixed-right">
+                    <li>
+                        <a href="{{ path_for('patient.edit', {'id' : patientId}) }}" target="_blank">
+                            <i class="fa fa-folder nav-icon" aria-hidden="true"></i> Karton pacijenta
+                        </a>
+                    </li>
+                    <li class="active anamnesis-btn">
+                        <a href="javascript:void(0);" data-hash="#anamnesis">
+                            <i class="fa fa-stethoscope nav-icon" aria-hidden="true"></i> Anamneza
+                        </a>
+                    </li>
+                    <li class="conclusion-container-btn">
+                        <a href="javascript:void(0);" data-hash="#conclusion">
+                            <i class="fa fa-user-md nav-icon" aria-hidden="true"></i> Zaključak
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" data-hash="#icd-10">
+                            <i class="fa fa-list-alt nav-icon" aria-hidden="true"></i> ICD-10 Klasifikacija bolesti
+                        </a>
+                    </li>
+                    {% if examination_id is not null %}
+                        <li>
+                            <a href="{{ path_for('preview.download') ~ '?id=' ~ examination_id ~ '&url=' ~ current_url|url_encode }}" id="download-examination">
+                                <i class="fas fa-download nav-icon" aria-hidden="true"></i> Preuzmi parametre pregleda
+                                ({{ examination_id }})
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div><hr/>
+    </div>
+    <div class="col-md-9">
+        <form method="post" class="form-horizontal">
+            <div id="anamnesis" class="segment-container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <textarea class="form-control" name="anamnesis" data-type="tinymce">{{ request.anamnesis|default("<p>Danas urađeno vidno polje na zahtev ...</p><p>KVP – nalaz u prilogu ovog izveštaja</p><p style='padding-left: 30px;'>Saradnja:</p><p style='padding-left: 30px;'>Program: <span style='background-color: #ff0;'>fast threshold 30/2</span></p><p style='padding-left: 30px;'>OD: MD 0 dB</p><p style='padding-left: 30px;'>OS: MD 0 dB</p><p>Napomena:</p>") }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="conclusion" class="segment-container">
+                <h4>ZAKLJUČAK</h4><hr/>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="examination-conclusion">Zaključak:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="examination-conclusion" name="examination-conclusion" rows="3">{{ request.examination_conclusion }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="examination-advice">Savet:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="examination-advice" name="examination-advice" rows="3">{{ request.examination_advice }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="control-with-ophthalmologist">Kontrola kod oftalmologa:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="control-with-ophthalmologist" name="control-with-ophthalmologist" rows="3">{{ request.control_with_the_ophthalmologist }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="therapy-at-home">Terapija kod kuće:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="therapy-at-home" name="therapy-at-home" rows="3">{{ request.therapy_at_home }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="diagnosis">Dijagnoza:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="diagnosis" name="diagnosis" rows="3">{{ request.diagnosis }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="icd-10" class="segment-container">
+                <h4>ICD-10 KLASIFIKACIJA BOLESTI</h4><hr/>
+                <div class="form-group {{ errors.icd10 ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-2" for="icd10">Bolest:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control selectpicker" id="icd10" name="icd-10[]" title="---" data-size="10" data-live-search="true" multiple>
+                            {% if icdList is not empty %}
+                                {% for icd in icdList %}
+                                    <option value="{{ icd.id }}" {{ icd.id in request.icd10IDs ? 'selected' : '' }}>
+                                        {{ icd.code ~ ' - ' ~  icd.name }}
+                                    </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        {% if errors.icd10 is not null %}
+                            <span class="field-message text-danger">{{ errors.icd10 | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary small-btn">sačuvaj pregled</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

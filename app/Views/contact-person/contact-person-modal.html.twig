@@ -1,0 +1,64 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">nova kontakt osoba</h4>
+        </div>
+        <div class="modal-body">
+            {% include 'partial/flash.html.twig' %}
+            <div class="form-horizontal">
+                <div class="form-group {{ errors.name ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-3" for="name">
+                        <span class="mark-star">*</span> Ime osobe:
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="name" value="{{ request.name }}" data-convert-letters>
+                        {% if errors.name %}
+                            <span class="field-message text-danger">{{ errors.name|first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group {{ errors.surname ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-3" for="surname">
+                        <span class="mark-star">*</span> Prezime osobe:
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="surname" value="{{ request.surname }}" data-convert-letters>
+                        {% if errors.name %}
+                            <span class="field-message text-danger">{{ errors.surname|first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group {{ errors.dial_number ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-3" for="dial_number">
+                        <span class="mark-star">*</span> Telefon osobe:
+                    </label>
+                    <div class="col-sm-3">
+                        <select class="form-control selectpicker" id="dial_number" data-size="5" data-live-search="true" title="---">
+                            {% if(dialNumbers is not null) %}
+                                {% for dialNumber in dialNumbers %}
+                                    <option value="{{ dialNumber.id }}" {{ request.dial_number == dialNumber.id ? 'selected' : '' }}>{{ dialNumber.dial_number }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        {% if errors.dial_number %}
+                            <span class="field-message text-danger">{{ errors.dial_number|first }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="phone_number" value="{{ request.phone_number }}" maxlength="7">
+                        {% if errors.dial_number %}
+                            <span class="field-message text-danger">{{ errors.phone_number|first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="btn-group">
+                <button type="button" class="btn btn-link" data-dismiss="modal">otkaži</button>
+                <button type="button"  class="btn btn-primary" id="store-contact-person">sačuvaj</button>
+            </div>
+        </div>
+    </div>
+</div>

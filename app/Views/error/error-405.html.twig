@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+    <link type="text/css" rel="stylesheet" href="css/iris-apk-style.css">
+    <link type="text/css" rel="stylesheet" href="css/error.css">
+{% endblock %}
+{% block container %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="text-center">405</h1>
+            <h2 class="text-center">Žao nam je, stranici mogu pristupiti samo autorizovane osobe.</h2><hr/>
+            <p class="text-center">Da bi pristupili ovoj stranici potrebno Vam je odobrenje od administratora,
+                <a href="{{ path_for('appointment.index') }}" title="idi na početnu">idi na početnu stranu</a>.
+            </p>
+        </div>
+    </div>
+{% endblock %}

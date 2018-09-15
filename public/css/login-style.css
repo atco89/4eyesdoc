@@ -1,0 +1,35 @@
+body {
+    background: url('../media/images/login-wallpaper.jpg') no-repeat;
+    background-size: cover;
+}
+
+.login-interface {
+    width: 1024px;
+    height: 170px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -75px;
+    margin-left: -625px;
+}
+
+label {
+    color: #fff;
+}
+
+.form-control {
+    cursor: pointer;
+}
+
+.special-input,
+.special-input:active,
+.special-input:hover,
+.special-input:focus {
+    border-color: #f8f8f8;
+    box-shadow: none;
+    border-radius: 1px;
+}
+
+.bordered-right {
+    border-right: 2px solid #333;
+}

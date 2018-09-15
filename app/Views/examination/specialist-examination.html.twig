@@ -1,0 +1,388 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+    <link type="text/css" rel="stylesheet" href="css/libs/bootstrap-select.min.css">
+    <link type="text/css" rel="stylesheet" href="css/libs/bootstrap-datepicker3.standalone.min.css">
+    <link type="text/css" rel="stylesheet" href="css/libs/jquery.datetimepicker.min.css">
+    <link type="text/css" rel="stylesheet" href="css/checkbox-bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="css/iris-apk-style.css">
+    <link type="text/css" rel="stylesheet" href="css/cardboard.css">
+    <link type="text/css" rel="stylesheet" href="css/examination.css">
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="js/libs/bootstrap-select.js"></script>
+    <script type="text/javascript" src="js/libs/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="js/4eyesdoc.1.0.0.min.js"></script>
+    <script type="text/javascript" src="js/default.js"></script>
+    <script type="text/javascript" src="js/examination.js"></script>
+{% endblock %}
+{% block container %}
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-12">
+                <ul id="examination-steps" class="nav nav-pills nav-stacked navbar-fixed-right">
+                    <li>
+                        <a href="{{ path_for('patient.edit', {'id' : patientId}) }}" target="_blank">
+                            <i class="fa fa-folder nav-icon" aria-hidden="true"></i> Karton pacijenta
+                        </a>
+                    </li>
+                    <li class="active anamnesis-btn">
+                        <a href="javascript:void(0);" data-hash="#anamnesis">
+                            <i class="fa fa-stethoscope nav-icon" aria-hidden="true"></i> Anamneza
+                        </a>
+                    </li>
+                    <li class="status-localis-btn">
+                        <a href="javascript:void(0);" data-hash="#status-localis">
+                            <i class="fa fa-stethoscope nav-icon" aria-hidden="true"></i> Status localis
+                        </a>
+                    </li>
+                    <li class="conclusion-container-btn">
+                        <a href="javascript:void(0);" data-hash="#conclusion">
+                            <i class="fa fa-user-md nav-icon" aria-hidden="true"></i> Zaključak
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" data-hash="#icd-10">
+                            <i class="fa fa-list-alt nav-icon" aria-hidden="true"></i> ICD-10 Klasifikacija bolesti
+                        </a>
+                    </li>
+                    {% if examination_id is not null %}
+                        <li>
+                            <a href="{{ path_for('preview.download') ~ '?id=' ~ examination_id ~ '&url=' ~ current_url|url_encode }}" id="download-examination">
+                                <i class="fas fa-download nav-icon" aria-hidden="true"></i> Preuzmi parametre pregleda
+                                ({{ examination_id }})
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="checkbox checkbox-primary checkbox-circle">
+                    <input type="checkbox" id="show-field-kvp" class="show-fields" data-hash="#kvp-container"/>
+                    <label for="show-field-kvp">KVP</label>
+                </div>
+                <div class="checkbox checkbox-primary checkbox-circle">
+                    <input type="checkbox" id="show-field-oct-pno" class="show-fields" data-hash="#oct-pno-container"/>
+                    <label for="show-field-oct-pno">OCT</label>
+                </div>
+                <div class="checkbox checkbox-primary checkbox-circle">
+                    <input type="checkbox" id="show-eye-ultrasound" class="show-fields"
+                           data-hash="#eye-ultrasound-container"/>
+                    <label for="show-eye-ultrasound">Ultrazvuk oka</label>
+                </div>
+                <div class="checkbox checkbox-primary checkbox-circle">
+                    <input type="checkbox" id="show-meibomography" class="show-fields"
+                           data-hash="#meibomography-container"/>
+                    <label for="show-meibomography">Meibomografija</label>
+                </div>
+                <div class="checkbox checkbox-primary checkbox-circle">
+                    <input type="checkbox" id="show-corneal-topography" class="show-fields"
+                           data-hash="#corneal-topography-container"/>
+                    <label for="show-corneal-topography">Kornealna topografija</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <form method="post" class="form-horizontal">
+            <div id="anamnesis" class="segment-container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <textarea class="form-control" name="anamnesis" data-type="tinymce">{{ request.anamnesis }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="status-localis" class="segment-container">
+                <h4>STATUS LOCALIS</h4>
+                <hr/>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="vod">VOD:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="vod" name="vod" value="{{ request.vod }}">
+                    </div>
+                    <label class="control-label col-sm-2" for="vos">VOS:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="vos" name="vos" value="{{ request.vos }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="tod">TOD:</label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="tod" name="tod" value="{{ request.tod }}">
+                            <div class="input-group-btn">
+                                <span class="btn btn-default measure">mmHg</span>
+                            </div>
+                        </div>
+                    </div>
+                    <label class="control-label col-sm-2" for="tos">TOS:</label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="tos" name="tos" value="{{ request.tos }}">
+                            <div class="input-group-btn">
+                                <span class="btn btn-default measure">mmHg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="rod">ROD:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="rod" name="rod" value="{{ request.rod }}">
+                    </div>
+                    <label class="control-label col-sm-2" for="ros">ROS:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="ros" name="ros" value="{{ request.ros }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="cct-od">CCT OD:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="cct-od" name="cct-od" value="{{ request.cct_od }}">
+                    </div>
+                    <label class="control-label col-sm-2" for="cct-os">CCT OS:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="cct-os" name="cct-os" value="{{ request.cct_os }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="kf-od">KF OD:</label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="kf-od" name="kf-od" value="{{ request.kf_od }}">
+                            <div class="input-group-btn">
+                                <span class="btn btn-default measure">mmHg</span>
+                            </div>
+                        </div>
+                    </div>
+                    <label class="control-label col-sm-2" for="kf-os">KF OS:</label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="kf-os" name="kf-os" value="{{ request.kf_os }}">
+                            <div class="input-group-btn">
+                                <span class="btn btn-default measure">mmHg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="ar-od">AR OD:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="ar-od" name="ar-od" value="{{ request.ar_od }}">
+                    </div>
+                    <label class="control-label col-sm-2" for="ar-os">AR OS:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="ar-os" name="ar-os" value="{{ request.ar_os }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="ar-od-ar-os-measurement-method">NAPOMENA:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="ar-od-ar-os-measurement-method" name="ar-od-ar-os-measurement-method" value="{{ request.ar_od_ar_os_measurement_method|default("IOP izmeren u .... h beskontaktnom metodom Ultrawave medical 700; korekcioni faktor (KF) za pahimetriju Daughty1") }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="foko-f-od">FOKO F OD:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="foko-f-od" name="foko-f-od" value="{{ request.foko_f_od }}">
+                    </div>
+                    <label class="control-label col-sm-2" for="foko-f-os">FOKO F OS:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="foko-f-os" name="foko-f-os" value="{{ request.foko_f_os }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="foko-k-od">FOKO K OD:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="foko-k-od" name="foko-k-od" value="{{ request.foko_k_od }}">
+                    </div>
+                    <label class="control-label col-sm-2" for="foko-k-os">FOKO K OS:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="foko-k-os" name="foko-k-os" value="{{ request.foko_k_os }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="foko-n-od">FOKO N OD:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="foko-n-od" name="foko-n-od" value="{{ request.foko_n_od }}">
+                    </div>
+                    <label class="control-label col-sm-2" for="foko-n-os">FOKO N OS:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="foko-n-os" name="foko-n-os" value="{{ request.foko_n_os }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="slod">SLOD:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="slod" name="slod" rows="2">{{ request.slod | default("Prednji segment miran, optičke medije providne.") }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="slos">SLOS:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="slos" name="slos" rows="2">{{ request.slos | default("Prednji segment miran, optičke medije providne.") }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="slou">SLOU:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="slou" name="slou" rows="2">{{ request.slou | default("Prednji segment miran, optičke medije providne.") }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="fod">FOD:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="fod" name="fod" rows="2">{{ request.fod }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="fos">FOS:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="fos" name="fos" rows="2">{{ request.fos }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="fou">FOU:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="fou" name="fou" rows="2">{{ request.fou }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="kvp-container" class="segment-container">
+                <h4>KVP</h4>
+                <hr/>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="kvp">KVP:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="kvp" name="kvp" rows="2">{{ request.kvp }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="kvp-conclusion">Zaključak:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="kvp-conclusion" name="kvp-conclusion" rows="2">{{ request.kvp_conclusion }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="kvp-control">Kontrola:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="kvp-control" name="kvp-control" rows="2">{{ request.kvp_control }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="oct-pno-container" class="segment-container">
+                <h4>OCT PNO</h4>
+                <hr/>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="oct-pno">OCT PNO:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="oct-pno" name="oct-pno" rows="2">{{ request.oct_pno }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="oct-pno-conclusion">Zaključak:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="oct-pno-conclusion" name="oct-pno-conclusion" rows="2">{{ request.oct_pno_conclusion }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="oct-pno-control">Kontrola:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="oct-pno-control" name="oct-pno-control" rows="2">{{ request.oct_pno_control }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="eye-ultrasound-container" class="segment-container">
+                <h4>ULTRAZVUK OKA</h4>
+                <hr/>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="eye-ultrasound">Zaključak:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="eye-ultrasound" name="eye-ultrasound" rows="2">{{ request.eye_ultrasound }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="meibomography-container" class="segment-container">
+                <h4>MEIBOMOGRAFIJA</h4>
+                <hr/>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="meibomography">Zaključak:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="meibomography" name="meibomography" rows="2">{{ request.meibomography }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="corneal-topography-container" class="segment-container">
+                <h4>KORNEALNA TOPOGRAFIJA</h4>
+                <hr/>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="corneal-topography">Zaključak:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="corneal-topography" name="corneal-topography" rows="2">{{ request.corneal_topography }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="conclusion" class="segment-container">
+                <h4>ZAKLJUČAK</h4>
+                <hr/>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="examination-conclusion">Zaključak:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="examination-conclusion" name="examination-conclusion" rows="3">{{ request.examination_conclusion }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="examination-advice">Savet:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="examination-advice" name="examination-advice" rows="3">{{ request.examination_advice }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="control-with-ophthalmologist">Kontrola kod oftalmologa:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="control-with-ophthalmologist" name="control-with-ophthalmologist" rows="3">{{ request.control_with_the_ophthalmologist }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="therapy-at-home">Terapija kod kuće:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="therapy-at-home" name="therapy-at-home" rows="3">{{ request.therapy_at_home }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="diagnosis">Dijagnoza:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="diagnosis" name="diagnosis" rows="3">{{ request.diagnosis }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="icd-10" class="segment-container">
+                <h4>ICD-10 KLASIFIKACIJA BOLESTI</h4><hr/>
+                <div class="form-group {{ errors.icd10 ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-2" for="icd10">Bolest:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control selectpicker" id="icd10" name="icd-10[]" title="---" data-size="10" data-live-search="true" multiple>
+                            {% if icdList is not empty %}
+                                {% for icd in icdList %}
+                                    <option value="{{ icd.id }}" {{ icd.id in request.icd10IDs ? 'selected' : '' }}>
+                                        {{ icd.code ~ ' - ' ~  icd.name }}
+                                    </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        {% if errors.icd10 is not null %}
+                            <span class="field-message text-danger">{{ errors.icd10 | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary small-btn">sačuvaj pregled</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

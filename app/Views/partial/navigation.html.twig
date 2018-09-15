@@ -1,0 +1,61 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#iris-navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="javascript:void(0);">
+                <img src="media/icons/navigation-icon.png" class="img-responsive" alt="navigation-icon">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="iris-navigation">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="{{ path_for('appointment.index') }}" title="Zakazivanje pregleda">
+                        <i class="fa fa-calendar nav-icon" aria-hidden="true"></i> Zakazivanje pregleda
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path_for('appointment.register') }}" title="Registar pregleda">
+                        <i class="fas fa-stethoscope nav-icon" aria-hidden="true"></i> Registar pregleda
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+                        <i class="fa fa-folder-open nav-icon" aria-hidden="true"></i> Kartoteka <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path_for('patient.create') }}" title="Registar korisnika">Otvaranje kartona</a></li>
+                        <li><a href="{{ path_for('patient.index') }}" title="Kreiranje profila korisnika">Registar pacijenata</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+                        <i class="fa fa-cog nav-icon" aria-hidden="true"></i> Administracija <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path_for('user.create') }}" title="Kreiranje profila korisnika">Kreiranje profila korisnika</a></li>
+                        <li><a href="{{ path_for('user.index') }}" title="Registar korisnika">Registar korisnika</a></li>
+                        <li><a href="{{ path_for('schedule.index') }}" title="Raspored rada lekara">Raspored rada lekara</a></li>
+                        <li><a href="{{ path_for('user.password') }}" title="Administracija loznike">Administracija loznike</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="mailto:support@4eyesdoc.rs" title="Tehnička podrška" class="text-danger">
+                        <i class="fas fa-headset nav-icon"></i> Tehnička podrška
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path_for('auth.signOut') }}">
+                        <i class="fa fa-sign-out nav-icon" aria-hidden="true"></i>
+                        {{ role ~ ' ' ~ name ~ ' ' ~ surname }} | Odjava
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

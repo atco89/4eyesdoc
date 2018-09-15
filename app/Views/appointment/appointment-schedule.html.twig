@@ -1,0 +1,103 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title"><i class="fas fa-user-md fa-icon"></i> Zakazivanje pregleda</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'partial/flash.html.twig' %}
+                    <div class="form-horizontal">
+                        <div class="form-group {{ errors.patient ? 'has-error' : '' }}">
+                            <label class="control-label col-sm-3" for="cardboard">
+                                <span class="required-field">*</span> Pacijent:
+                            </label>
+                            <div class="col-sm-9">
+                                <select class="form-control selectpicker" title="---" id="patient" data-live-search="true" data-size="5">
+                                    {% if patients is not empty %}
+                                        {% for patient in patients %}
+                                            <option value="{{ patient.id }}" {{ patient.id == request.patient ? 'selected' : '' }}>
+                                                {{ patient.dial_number.dial_number ~ patient.phone_number ~ ' - ' ~ patient.name ~ ' ' ~ patient.surname }}
+                                            </option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if errors.patient is not null %}
+                                    <span class="field-message text-danger">{{ errors.patient | first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group {{ errors.examination ? 'has-error' : '' }}">
+                            <label class="control-label col-sm-3" for="examination">
+                                <span class="required-field">*</span> Naziv pregleda:
+                            </label>
+                            <div class="col-sm-7">
+                                <select class="form-control selectpicker" title="---" id="examination" data-live-search="true" data-size="5">
+                                    {% if examinations is not empty %}
+                                        {% for examination in examinations %}
+                                            <option value="{{ examination.medical_examination.id }}" {{ request.examination == examination.medical_examination.id ? 'selected' : '' }} data-price="{{ examination.price }}" data-description="{{ examination.medical_examination.description }}">
+                                                {{ examination.medical_examination.name }}
+                                            </option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if errors.examination is not null %}
+                                    <span class="field-message text-danger">{{ errors.examination | first }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="col-sm-2">
+                                <button id="show-exam-details" class="btn btn-info collapsed" data-toggle="collapse" data-target="#examination-details-container">
+                                    <i class="far fa-question-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="examination-details-container" class="form-group panel-collapse collapse out">
+                            <div class="col-sm-12">
+                                <div id="examination-details" class="well">Molimo Vas izaberite pregled!</div>
+                            </div>
+                        </div>
+                        <div class="form-group {{ errors.doctor ? 'has-error' : '' }}">
+                            <label class="control-label col-sm-3" for="doctor">
+                                <span class="required-field">*</span> Izabrani lekar:
+                            </label>
+                            <div class="col-sm-9">
+                                <select class="form-control selectpicker" title="---" id="doctor" name="doctor" data-live-search="true" data-size="5">
+                                    {% if doctors is not empty %}
+                                        {% for doctor in doctors %}
+                                            <option value="{{ doctor.id }}" {{ request.doctor == doctor.id ? 'selected' : '' }}>
+                                                {{ doctor.title ~ ' ' ~ doctor.name ~ ' ' ~ doctor.surname }}
+                                            </option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if errors.doctor is not null %}
+                                    <span class="field-message text-danger">{{ errors.doctor | first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group {{ errors.startDateTime ? 'has-error' : '' }}">
+                            <label class="control-label col-sm-3" for="start-date-time">
+                                <span class="required-field">*</span> Datum i vreme:
+                            </label>
+                            <div class="col-sm-9">
+                                <div class="input-group date" id="exam-date-time">
+                                    <input class="form-control datepicker" id="start-date-time" type="text" readonly="readonly" value="{{ request.startDateTime|date('d.m.Y H:i') }}">
+                                    <span class="input-group-addon"><i class="fas fa-calendar-alt"></i></span>
+                                </div>
+                                {% if errors.startDateTime is not null %}
+                                    <span class="field-message text-danger">{{ errors.startDateTime | first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button class="btn small-btn btn-primary" id="store-event">zakaži pregled</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

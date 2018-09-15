@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+    <link type="text/css" rel="stylesheet" href="css/libs/bootstrap-select.min.css">
+    <link type="text/css" rel="stylesheet" href="css/libs/jquery-ui.min.css">
+    <link type="text/css" rel="stylesheet" href="css/libs/full-calendar.min.css">
+    <link type="text/css" rel="stylesheet" href="css/libs/bootstrap-datetime-picker.min.css">
+    <link type="text/css" rel="stylesheet" href="css/iris-apk-style.css">
+    <link type="text/css" rel="stylesheet" href="css/appointments.css">
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="js/libs/bootstrap-select.js"></script>
+    <script type="text/javascript" src="js/libs/moment.min.js"></script>
+    <script type="text/javascript" src="js/libs/full-calendar.js"></script>
+    <script type="text/javascript" src="js/libs/locale-all.js"></script>
+    <script type="text/javascript" src="js/libs/bootstrap-datetime-picker.min.js"></script>
+    <script type="text/javascript" src="js/4eyesdoc.1.0.0.min.js"></script>
+    <script type="text/javascript" src="js/full-calendar.js"></script>
+    <script type="text/javascript" src="js/appointment.js"></script>
+{% endblock %}
+{% block container %}
+    <div id="modal" class="modal fade" role="dialog"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    {% if examinationStatus is not null %}
+                        {% for status in examinationStatus %}
+                            <span class="label text-center {{ status.style }}">{{ status.name }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div><hr/>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+        </div>
+    </div><br/>
+{% endblock %}

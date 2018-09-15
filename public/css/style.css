@@ -1,0 +1,58 @@
+/* ----- external font ----- */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+/* ----- body ----- */
+
+body > * {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 13px;
+}
+
+/* ----- form ----- */
+
+label {
+    font-weight: 500;
+    color: #000;
+}
+
+.small-btn {
+    padding: 5px 12px;
+    border-radius: 2px;
+}
+
+.btn,
+.bootstrap-select > *,
+.form-control {
+    font-size: 13px !important;
+    border-radius: 0 !important;
+}
+
+.bootstrap-select > *,
+.form-control {
+    border: 1px solid #ccc;
+    box-shadow: none !important;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 8px;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    margin-top: 2px!important;
+}
+
+.field-message {
+    display: inline-block;
+    font-size: 10px;
+}
+
+.validation-error {
+    font-size: 12px;
+}
+
+.validation-container {
+    background-color: transparent;
+    border-color: transparent;
+}

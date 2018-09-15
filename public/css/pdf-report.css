@@ -1,0 +1,141 @@
+/* ----------------------------------------------- */
+/* -------------------- BASE --------------------- */
+/* ----------------------------------------------- */
+
+@page {
+    size: A4;
+    margin: 100px 25px !important;
+}
+
+body > * {
+    font-family: DejaVu Sans, sans-serif;
+}
+
+/* ----------------------------------------------- */
+/* -------------------- TABLE -------------------- */
+/* ----------------------------------------------- */
+
+table {
+    width: 100% !important;
+    margin-bottom: 5px !important;
+    font-size: 10px !important;
+}
+
+td, th {
+    vertical-align: middle !important;
+    padding: 3px;
+}
+
+.label-cell {
+    width: 100px !important;
+    padding-right: 5px;
+    border-right: 1px solid #000 !important;
+    text-align: right;
+}
+
+/* ----------------------------------------------- */
+/* -------------------- HEADER ------------------- */
+/* ----------------------------------------------- */
+
+header {
+    position: fixed;
+    width: 100%;
+    height: 90px;
+    top: -90px;
+    left: 0;
+    right: 0;
+    z-index: 999999;
+}
+
+#header-image {
+    height: 85px !important;
+    text-align: center;
+}
+
+/* ----------------------------------------------- */
+/* ---------------- PATIENT INFO ----------------- */
+/* ----------------------------------------------- */
+
+#patient-informations {
+    width: 90% !important;
+    margin: 0 auto 10px auto !important;
+}
+
+/* ----------------------------------------------- */
+/* ----------------- REPORT NAME ----------------- */
+/* ----------------------------------------------- */
+
+#report-name {
+    width: 100%;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* ----------------------------------------------- */
+/* --------------- STATUS LOCALIS ---------------- */
+/* ----------------------------------------------- */
+
+#status-localis {
+    width: 100%;
+    margin: 0 0 10px 0;
+}
+
+#status-localis tbody tr:nth-child(odd) {
+    background-color: #f0f0f0;
+}
+
+.status-localis-headers {
+    text-align: center;
+    border-bottom: 1px solid #000;
+}
+
+#status-localis tbody th {
+    text-align: right;
+}
+
+#measurement-method {
+    font-size: 10px;
+    font-style: italic;
+    margin-top: 0;
+}
+
+/* ----------------------------------------------- */
+/* ------------------ SIGNATURE ------------------ */
+/* ----------------------------------------------- */
+
+#signature {
+    width: 100%;
+}
+
+#signature-field {
+    border-bottom: 1px dotted #000;
+    height: 30px;
+}
+
+.signature-field {
+    text-align: right;
+    width: 35%;
+}
+
+/* ----------------------------------------------- */
+/* -------------------- FOOTER ------------------- */
+/* ----------------------------------------------- */
+
+footer {
+    position: fixed;
+    width: 100%;
+    height: 90px;
+    bottom: -90px;
+    left: 0;
+    right: 0;
+    z-index: 999999;
+    text-align: center;
+}
+
+#disclaimer {
+    width: 100% !important;
+    margin: 5px auto !important;
+    font-size: 9px !important;
+    color: #ccc !important;
+    font-style: italic !important;
+}

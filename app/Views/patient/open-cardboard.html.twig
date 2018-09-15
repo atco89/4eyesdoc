@@ -1,0 +1,251 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <link type="text/css" rel="stylesheet" href="css/libs/date-picker/bootstrap-datepicker3.standalone.min.css">
+    <link type="text/css" rel="stylesheet" href="css/iris-apk-style.css">
+    <link type="text/css" rel="stylesheet" href="css/cardboard.css">
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="js/libs/date-picker/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="js/libs/date-picker/bootstrap-datepicker.sr-latin.min.js"></script>
+    <script type="text/javascript" src="js/4eyesdoc.1.0.0.min.js"></script>
+    <script type="text/javascript" src="js/cardboard.js"></script>
+    <script type="text/javascript" src="js/default.js"></script>
+    <script type="text/javascript" src="js/patient.js"></script>
+{% endblock %}
+{% block container %}
+    <div id="modal" class="modal fade" role="dialog"></div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="javascript:void(0);">Opšte informacije o pacijentu</a></li>
+    </ul><br/>
+    <div class="tab-content">
+        <div class="tab-pane fade in active">
+            <form method="post" role="form" class="form-horizontal">
+                <div class="form-group {{ errors.name ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-2" for="name">
+                        <span class="mark-star">*</span> Ime pacijenta:
+                    </label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="name" name="name" value="{{ request.name }}" data-convert-letters>
+                        {% if errors.name is not null %}
+                            <span class="field-message text-danger">{{ errors.name | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group {{ errors.surname ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-2" for="surname">
+                        <span class="mark-star">*</span> Prezime pacijenta:
+                    </label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="surname" name="surname" value="{{ request.surname }}" data-convert-letters>
+                        {% if errors.surname is not null %}
+                            <span class="field-message text-danger">{{ errors.surname | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group {{ errors.personalId ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-2" for="personal-id">JMBG:</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="personal-id" name="personalId" value="{{ request.personalId }}" maxlength="13">
+                        {% if errors.personalId is not null %}
+                            <span class="field-message text-danger">{{ errors.personalId | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group {{ errors.dateOfBirth ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-2" for="date-of-birth">
+                        <span class="mark-star">*</span> Datum rođenja:
+                    </label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="date-of-birth" name="dateOfBirth" value="{{ request.dateOfBirth }}">
+                        {% if errors.dateOfBirth is not null %}
+                            <span class="field-message text-danger">{{ errors.dateOfBirth | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group radio-group {{ errors.sex ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-2">
+                        <span class="mark-star">*</span> Pol pacijenta:
+                    </label>
+                    <div class="col-sm-5">
+                        <label class="radio-inline">
+                            <input type="radio" name="sex" value="0" {{ request.sex == 0 ? 'checked' : ''}}>Muško
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="sex" value="1" {{ request.sex == 1 ? 'checked' : ''}}>Žensko
+                        </label>
+                        {% if errors.sex is not null %}
+                            <span class="field-message text-danger">{{ errors.sex | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group {{ errors.email ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-2" for="email">E-adresa:</label>
+                    <div class="col-sm-5">
+                        <input type="email" class="form-control" id="email" name="email" value="{{ request.email }}" data-convert-letters data-to-lower>
+                        {% if errors.email is not null %}
+                            <span class="field-message text-danger">{{ errors.email | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group {{ errors.dialNumber or errors.phoneNumber ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-2" for="phone-number">
+                        <span class="mark-star">*</span> Broj telefona:
+                    </label>
+                    <div class="col-sm-2 {{ errors.dialNumber ? 'has-error' : '' }}">
+                        <select class="form-control selectpicker" id="dial-number" name="dialNumber" data-size="5" data-live-search="true" title="---">
+                            {% if(dialNumbers is not null) %}
+                                {% for dialNumber in dialNumbers %}
+                                    <option value="{{ dialNumber.id }}" {{ request.dialNumber == dialNumber.id ? 'selected' : ''}}>
+                                        {{ dialNumber.dial_number }}
+                                    </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        {% if errors.dialNumber is not null %}
+                            <span class="field-message text-danger">{{ errors.dialNumber | first }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-3 {{ errors.phoneNumber ? 'has-error' : '' }}">
+                        <input type="text" class="form-control" id="phone-number" name="phoneNumber" value="{{ request.phoneNumber }}" maxlength="7">
+                            {% if errors.phoneNumber is not null %}
+                            <span class="field-message text-danger">{{ errors.phoneNumber | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="address">Adresa:</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="address" name="address" value="{{ request.address }}" data-convert-letters>
+                    </div>
+                </div>
+                <div class="form-group {{ errors.contactPerson ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-2">Kontakt osoba:</label>
+                    <div class="col-sm-5">
+                        <select class="form-control selectpicker" id="contact-person" name="contactPerson" data-live-search="true" data-size="5" title="---">
+                            {% if contactPersons is not null %}
+                                {% for contactPerson in contactPersons %}
+                                    <option value="{{ contactPerson.id }}" {{ request.contactPerson == contactPerson.id ? 'selected' : '' }}>
+                                        {{ contactPerson.dial_number.dial_number ~ contactPerson.phone_number ~ ' - ' ~ contactPerson.name ~ ' ' ~ contactPerson.surname }}
+                                    </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        {% if errors.contactPerson is not null %}
+                            <span class="field-message text-danger">{{ errors.contactPerson | first }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-1">
+                        <a class="btn btn-success" id="add-contact-person">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group {{ errors.profession ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-2">Profesija:</label>
+                    <div class="col-sm-5">
+                        <select class="form-control selectpicker" id="professions" name="profession" data-live-search="true" data-size="5" title="---">
+                            {% if professions is not null %}
+                                {% for profession in professions %}
+                                    <option value="{{ profession.id }}" {{ request.profession == profession.id ? 'selected' : ''}}>
+                                        {{ profession.profession_name }}
+                                    </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        {% if errors.profession is not null %}
+                            <span class="field-message text-danger">{{ errors.profession | first }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-1">
+                        <a class="btn btn-success" id="add-profession">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group {{ errors.recommendationType ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-2">Tip preporuke:</label>
+                    <div class="col-sm-5">
+                        <select class="form-control selectpicker" id="recommendation-type" name="recommendationType" data-size="5" title="---">
+                            {% if recommendationTypes is not null %}
+                                {% for recommendation in recommendationTypes %}
+                                    <option value="{{ recommendation.id }}" data-hash="{{ recommendation.hash }}" {{ request.recommendationType == recommendation.id ? 'selected' : ''}}>
+                                        {{ recommendation.name }}
+                                    </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        {% if errors.recommendationType is not null %}
+                            <span class="field-message text-danger">{{ errors.recommendationType | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div id="associates" class="form-group recommendation-type-container">
+                    <label class="control-label col-sm-2">Saradnici:</label>
+                    <div class="col-sm-5">
+                        <select class="form-control selectpicker" id="associates-list" data-live-search="true" data-size="5" title="---">
+                            {% if associates is not null %}
+                                {% for associate in associates %}
+                                    <option value="{{ associate.id }}" {{ request.recommendationType == '1' and request.associate == associate.id ? 'selected' : '' }}>
+                                        {{ associate.dial_number.dial_number ~ associate.phone_number ~ ' ' ~ associate.name }}
+                                    </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="col-sm-1">
+                        <a class="btn btn-success" id="add-associate">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div id="internet-recommendation" class="form-group recommendation-type-container {{ errors.associate ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-2">Internet preporuka:</label>
+                    <div class="col-sm-5">
+                        <select class="form-control selectpicker" data-size="5" title="---">
+                            {% if webRecommendations is not null %}
+                                {% for webRecommendation in webRecommendations %}
+                                    <option value="{{ webRecommendation.id }}" {{ request.recommendationType == '2' and request.associate == associate.id ? 'selected' : '' }}>
+                                        {{ webRecommendation.name }}
+                                    </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        {% if errors.associate is not null %}
+                            <span class="field-message text-danger">{{ errors.associate | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div id="patient-recommendation" class="form-group recommendation-type-container {{ errors.associate ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-2">Pacijent ordinacije:</label>
+                    <div class="col-sm-5">
+                        <select class="form-control selectpicker" data-live-search="true" data-size="5" title="---">
+                            {% if patients is not null %}
+                                {% for patient in patients %}
+                                    <option value="{{ patient.id }}" {{ request.recommendationType == '3' and request.associate == associate.id ? 'selected' : '' }}>
+                                        {{ patient.dial_number.dial_number ~ patient.phone_number ~ ' ' ~  patient.name ~ ' ' ~ patient.surname }}
+                                    </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        {% if errors.associate is not null %}
+                            <span class="field-message text-danger">{{ errors.associate | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="comment">Komentar:</label>
+                    <div class="col-sm-5">
+                        <textarea title="Komentar" class="form-control" rows="8" name="comment" data-convert-letters>{{ request.comment }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-5">
+                        <button type="submit" class="btn btn-primary small-btn">sačuvaj</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

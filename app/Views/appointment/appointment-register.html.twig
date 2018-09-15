@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/libs/bootstrap-datepicker.min.css">
+    <link type="text/css" rel="stylesheet" href="css/libs/bootstrap-select.min.css">
+    <link type="text/css" rel="stylesheet" href="css/iris-apk-style.css">
+    <link type="text/css" rel="stylesheet" href="css/appointments.css">
+    <link type="text/css" rel="stylesheet" href="css/appointments-register.css">
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="js/libs/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="js/libs/bootstrap-datepicker.sr-latin.min.js"></script>
+    <script type="text/javascript" src="js/libs/bootstrap-select.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/4eyesdoc.1.0.0.min.js"></script>
+    <script type="text/javascript" src="js/data-table.js"></script>
+    <script type="text/javascript" src="js/appointments-register.js"></script>
+{% endblock %}
+{% block container %}
+    <div id="medical-examination-template" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Izaberite tip izveštaja</h4>
+                </div>
+                <div class="modal-body">
+                    <select class="form-control selectpicker" title="---" id="template">
+                        {% if templates is not null %}
+                            {% for template in templates %}
+                                <option value="{{ template.id }}">{{ template.template_name }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary small-btn" id="select-template">izaberi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <form method="post" action="{{ path_for('appointment.search') }}" role="form">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="doctor">Period:</label>
+                    <div class="col-sm-5">
+                        <div class="input-daterange input-group" id="datepicker">
+                            <input type="text" class="input-sm form-control" name="startDate" value="{{ request.startDate }}">
+                            <span class="input-group-addon">do</span>
+                            <input type="text" class="input-sm form-control" name="endDate" value="{{ request.endDate }}">
+                        </div>
+                    </div>
+                    <label class="control-label col-sm-1" for="doctor">Doktor:</label>
+                    <div class="col-sm-5">
+                        <select id="doctor" name="doctor" class="form-control selectpicker" title="---" data-live-search="true" data-size="5">
+                            {% if(doctors is not null) %}
+                                {% for doctor in doctors %}
+                                    <option value="{{ doctor.id }}" {{ request.doctor == doctor.id ? 'selected' : '' }}>
+                                        {{ doctor.group_role.role.title ~ ' ' ~ doctor.name ~ ' ' ~ doctor.surname }}
+                                    </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="diagnosis">Dijagnoza:</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="diagnosis" name="diagnosis"
+                               value="{{ request.diagnosis }}">
+                    </div>
+                    <div class="col-sm-offset-1 col-sm-5">
+                        <input type="submit" class="btn btn-primary small-btn" value="primeni filtere">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr/>
+        <p class="notice">
+            <i class="fas fa-info-circle"></i> Pregled možete izmeniti najkasnije
+            <span class="text-danger"><strong>{{ allowEditPeriod }}</strong></span> dana od poslednje izmene.
+        </p>
+        <table id="appointments-table" class="table table-hover table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>R. Br.</th>
+                    <th>Prezime</th>
+                    <th>Ime</th>
+                    <th>Godina</th>
+                    <th>Doktor</th>
+                    <th>Pregled</th>
+                    <th>Cena</th>
+                    <th>Izveštaj</th>
+                    <th>Početak</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if appointments is not empty %}
+                {% for appointment in appointments %}
+                    <tr class="{{ appointment.examination_status_style }}">
+                        <td class="text-center"></td>
+                        <td class="text-center">{{ appointment.surname }}</td>
+                        <td class="text-center">{{ appointment.name }}</td>
+                        <td class="text-center">{{ appointment.date_of_birth|age }}</td>
+                        <td class="text-center">{{ appointment.doctor_title ~ ' ' ~ appointment.doctor_name ~ ' ' ~ appointment.doctor_surname }}</td>
+                        <td class="text-center">
+                            <a href="javascript:void(0);" class="examination-details" data-toggle="popover" data-placement="top" data-content="{{ appointment.medical_examination_name }}">
+                                šifra - {{ appointment.medical_examination_id }}
+                            </a>
+                        </td>
+                        <td class="text-center">{{ appointment.medical_examination_price|number_format }} RSD</td>
+                        <td class="text-center">{{ appointment.report_type|default('Izveštaj nije kreiran') }}</td>
+                        <td class="text-center">{{ appointment.start_date_time|date('Y-m-d H:i') }}</td>
+                        <td class="text-center">
+                            {% if appointment.is_editable is not null %}
+                                <a href="{{ path_for('examination.pdf', {'id' : appointment.id}) }}" title="štampaj pregled" class="btn btn-xs btn-danger">
+                                    <i class="fas fa-file-pdf"></i>
+                                </a>
+                            {% else %}
+                                <a href="javascript:void(0);" disabled="disabled" class="btn btn-xs btn-default">
+                                    <i class="fas fa-file-pdf"></i>
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if appointment.is_editable is null %}
+                                <a href="javascript:void(0);" class="btn btn-xs btn-primary choose-template" data-toggle="modal" data-target="#medical-examination-template" data-examination-id="{{ appointment.id }}">
+                                    otvori pregled
+                                </a>
+                            {% elseif appointment.is_editable == true %}
+                                <a href="{{ path_for('examination.edit', {'id' : appointment.id}) }}" class="btn btn-xs btn-warning">
+                                    izmeni pregled
+                                </a>
+                            {% elseif appointment.is_editable == false %}
+                                <a href="javascript:void(0);" class="btn btn-xs btn-link" disabled="disabled">
+                                    pregled zaključen
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+        <fieldset>
+            <legend>Eksport svih rezultata</legend>
+            <a href="{{ path_for('excel.appointments') }}" title="Eksport svih rezultata">
+                <img src="media/icons/xls-icon.png" alt="xls-icon"/>
+            </a>
+        </fieldset>
+    </div>
+{% endblock %}

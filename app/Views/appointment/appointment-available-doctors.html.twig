@@ -1,0 +1,9 @@
+{% if doctors is not empty %}
+    {% for doctor in doctors %}
+        <option value="{{ doctor.id }}">
+            {{ doctor.title ~ ' ' ~ doctor.name ~ ' ' ~ doctor.surname }}
+        </option>
+    {% endfor %}
+{% else %}
+    <option value="" selected="selected">Nema dostupnih lekara</option>
+{% endif %}

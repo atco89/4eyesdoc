@@ -1,0 +1,210 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+    <link type="text/css" rel="stylesheet" href="css/libs/bootstrap-select.min.css">
+    <link type="text/css" rel="stylesheet" href="css/iris-apk-style.css">
+    <link type="text/css" rel="stylesheet" href="css/create-user-profile.css">
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="js/libs/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="js/4eyesdoc.1.0.0.min.js"></script>
+    <script type="text/javascript" src="js/default.js"></script>
+    <script type="text/javascript" src="js/create-user-profile.js"></script>
+{% endblock %}
+{% block container %}
+    <form method="post" action="{{ user.create }}" class="form-horizontal">
+        <div class="col-sm-6">
+            <div class="form-group {{ errors.name ? 'has-error' : '' }}">
+                <label class="control-label col-sm-4" for="name">
+                    <span class="marker-star">*</span> Ime:
+                </label>
+                <div class="col-sm-8">
+                    <input type="text" id="name" name="name" class="form-control" value="{{ request.name }}" data-convert-letters>
+                    {% if errors.name %}
+                        <span class="field-message text-danger">{{ errors.name|first }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group {{ errors.surname ? 'has-error' : '' }}">
+                <label class="control-label col-sm-4" for="surname">
+                    <span class="marker-star">*</span> Prezime:
+                </label>
+                <div class="col-sm-8">
+                    <input type="text" id="surname" name="surname" class="form-control" value="{{ request.surname }}" data-convert-letters>
+                    {% if errors.surname %}
+                        <span class="field-message text-danger">{{ errors.surname|first }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group {{ errors.groupId ? 'has-error' : '' }}">
+                <label class="control-label col-sm-4" for="group">
+                    <span class="marker-star">*</span> Kategorija:
+                </label>
+                <div class="col-sm-8">
+                    <select class="form-control selectpicker" id="group" name="groupId" title="---" data-size="5">
+                        {% if groups is not null %}
+                            {% for group in groups %}
+                                <option value="{{ group.id }}" {{ request.groupId == group.id ? 'selected' : '' }}>
+                                    {{ group.name }}
+                                </option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                    {% if errors.groupId %}
+                        <span class="field-message text-danger">{{ errors.groupId|first }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group {{ errors.roleId ? 'has-error' : '' }}">
+                <label class="control-label col-sm-4" for="role">
+                    <span class="marker-star">*</span> Zvanje:
+                </label>
+                <div class="col-sm-8">
+                    <select class="form-control selectpicker" id="role" name="roleId" title="---" data-size="5" {{ roles is empty ? 'disabled' : '' }}>
+                        {% if roles is not null %}
+                            {% for role in roles %}
+                                <option value="{{ role.id }}" {{ request.roleId == role.id ? 'selected' : '' }}>
+                                    {{ role.name }}
+                                </option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                    {% if errors.roleId %}
+                        <span class="field-message text-danger">{{ errors.roleId|first }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group {{ errors.username ? 'has-error' : '' }}">
+                <label class="control-label col-sm-4" for="username">
+                    <span class="marker-star">*</span> Korisničko ime:
+                </label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="username" name="username" value="{{ request.username }}" data-convert-letters>
+                    {% if errors.username %}
+                        <span class="field-message text-danger">{{ errors.username|first }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group {{ errors.password ? 'has-error' : '' }}">
+                <label class="control-label col-sm-4" for="password">
+                    <span class="marker-star">*</span> Lozinka:
+                </label>
+                <div class="col-sm-8">
+                    <input type="password" class="form-control" id="password" name="password">
+                    {% if errors.password %}
+                        <span class="field-message text-danger">{{ errors.password|first }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group {{ errors.color ? 'has-error' : '' }}">
+                <label class="control-label col-sm-4" for="color">
+                    <span class="marker-star">*</span> Boja operatera:
+                </label>
+                <div class="col-sm-8">
+                    <input type="color" class="form-control" id="color" name="color" value="{{ request.color }}">
+                    {% if errors.color %}
+                        <span class="field-message text-danger">{{ errors.color|first }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group {{ errors.email ? 'has-error' : '' }}">
+                <label class="control-label col-sm-4" for="email">E adresa:</label>
+                <div class="col-sm-8">
+                    <input type="email" class="form-control" id="email" name="email" value="{{ request.email }}" data-convert-letters>
+                    {% if errors.email %}
+                        <span class="field-message text-danger">{{ errors.email|first }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group {{ errors.dialNumberId or errors.phoneNumber ? 'has-error' : '' }}">
+                <label class="control-label col-sm-4" for="dial-number">
+                    <span class="marker-star">*</span> Broj telefona:
+                </label>
+                <div class="col-sm-3">
+                    <select class="form-control selectpicker" id="dial-number" name="dialNumberId" title="---" data-live-search="true" data-size="5">
+                        {% if dialNumbers is not null %}
+                            {% for dialNumber in dialNumbers %}
+                                <option value="{{ dialNumber.id }}" {{ request.dialNumberId == dialNumber.id ? 'selected' : '' }}>
+                                    {{ dialNumber.dial_number }}
+                                </option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                    {% if errors.dialNumberId %}
+                        <span class="field-message text-danger">{{ errors.dialNumberId|first }}</span>
+                    {% endif %}
+                </div>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="phoneNumber" value="{{ request.phoneNumber }}" maxlength="7"/>
+                    {% if errors.phoneNumber %}
+                        <span class="field-message text-danger">{{ errors.phoneNumber|first }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group {{ errors.following ? 'has-error' : '' }}">
+                <label class="control-label col-sm-4" for="following">Pratim:</label>
+                <div class="col-sm-8">
+                    <select class="form-control selectpicker" id="following" name="following[]" title="---" data-size="5" data-actions-box="true" multiple>
+                        {% if doctors is not null %}
+                            {% for doctor in doctors %}
+                                <option value="{{ doctor.id }}" {{ doctor.id in request.following ? 'selected' : '' }}>
+                                    {{ doctor.group_role.role.title ~ ' ' ~ doctor.name ~ ' ' ~ doctor.surname }}
+                                </option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                    {% if errors.following %}
+                        <span class="field-message text-danger">{{ errors.following|first }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group {{ errors.followers ? 'has-error' : '' }}">
+                <label class="control-label col-sm-4" for="followers">Prate me:</label>
+                <div class="col-sm-8">
+                    <select class="form-control selectpicker" id="followers" name="followers[]" title="---" data-size="5" data-actions-box="true" multiple>
+                        {% if doctors is not null %}
+                            {% for doctor in doctors %}
+                                <option value="{{ doctor.id }}" {{ doctor.id in request.followers ? 'selected' : '' }}>
+                                    {{ doctor.group_role.role.title ~ ' ' ~ doctor.name ~ ' ' ~ doctor.surname }}
+                                </option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                    {% if errors.followers %}
+                        <span class="field-message text-danger">{{ errors.followers|first }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-8">
+                    <button type="submit" class="btn btn-primary small-btn">sačuvaj izmenu</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group {{ errors.examinations ? 'has-error' : '' }}">
+                <div class="col-sm-12">
+                    <div class="medical-examinations well">
+                        {% if examinations is not null %}
+                            <div class="checkbox all-checkbox">
+                                <label class="checkbox-inline">
+                                    <input class="examinations" id="all" name="all" type="checkbox" {{ request.all is not null ? 'checked' : ''}} disabled="disabled">Dodeli sve vrste preglede
+                                </label>
+                            </div><hr/>
+                            {% for examination in examinations %}
+                                <div class="checkbox">
+                                    <label data-toggle="tooltip" data-placement="top" title="{{ examination.description }}">
+                                        <input type="checkbox" name="examinations[]" class="examination" value="{{ examination.id }}" {{ examination.id in request.examinations ? 'checked' : '' }} disabled="disabled">
+                                        {{ examination.medical_examination.name }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    {% if errors.examinations %}
+                        <span class="field-message text-danger">{{ errors.examinations|first }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

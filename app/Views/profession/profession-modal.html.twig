@@ -1,0 +1,30 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">nova profesija</h4>
+        </div>
+        <div class="modal-body">
+            {% include 'partial/flash.html.twig' %}
+            <div class="form-horizontal">
+                <div class="form-group {{ errors.profession ? 'has-error' : '' }}">
+                    <label class="control-label col-sm-3" for="profession">
+                        <span class="mark-star">*</span> Naziv profesije:
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="profession" value="{{ request.profession }}" data-convert-letters>
+                        {% if errors.profession %}
+                            <span class="field-message text-danger">{{ errors.profession|first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="btn-group">
+                <button type="button" class="btn btn-link" data-dismiss="modal">otkaži</button>
+                <button type="button" class="btn btn-primary" id="store-profession">sačuvaj</button>
+            </div>
+        </div>
+    </div>
+</div>

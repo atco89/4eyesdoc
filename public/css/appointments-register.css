@@ -1,0 +1,31 @@
+#appointments-table th {
+    text-transform: uppercase;
+    text-align: center !important;
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    font-weight: unset;
+}
+
+#appointments-table th, #appointments-table td {
+    font-size: 12px;
+    padding: 4px !important;
+    vertical-align: middle !important;
+}
+
+fieldset {
+    margin-bottom: 15px;
+}
+
+.medical-examination-name,
+.medical-examination-name:hover {
+    color: #c00;
+}
+
+.popover-content {
+    text-align: center;
+}
+
+.notice {
+    margin-bottom: 20px!important;
+}

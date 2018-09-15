@@ -1,0 +1,54 @@
+.nav-pills > li > a {
+	background:linear-gradient(180deg,#f8f8f8,#cccccc);
+	border-radius:2px;
+	padding:5px 15px;
+	color:#000;
+	border:1px solid #ccc;
+}
+.nav-pills > li.active > a {
+	background:linear-gradient(180deg,#ffcc00,#ffa200);
+	border:1px solid #ffa200;
+}
+.icon {
+	float:right;
+	font-size:18px;
+}
+.section h3 {
+	margin-top:0;
+	margin-bottom:0;
+}
+.patients-list,
+.web-recommendation {
+	display:none;
+}
+.form-group {
+	margin-bottom:7.5px;
+}
+.radio-group {
+	margin-bottom:15px;
+}
+.btn-default,
+.form-control {
+	border:1px solid #c0c0c0;
+	box-shadow:none;
+	background-color:#f8f8f8;
+}
+.mark-star {
+	color:#f00;
+	font-weight:bold;
+}
+.btn-add,
+.btn-add:hover,
+.btn-add:focus,
+.btn-add:active,
+.btn-add:before,
+.btn-add:after {
+	color:#00f!important;
+	border:1px solid #ccc!important;
+	background:linear-gradient(180deg, #f8f8f8, #ccc);
+	border-radius:2px!important;
+}
+.btn {
+	border-radius:2px;
+	font-size:14px;
+}

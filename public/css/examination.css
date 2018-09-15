@@ -1,0 +1,16 @@
+#kvp-container,
+#oct-pno-container,
+#eye-ultrasound-container,
+#digital-funduskopi-container,
+#meibomography-container,
+#corneal-topography-container {
+    display: none;
+}
+
+.segment-container {
+    margin-bottom: 25px;
+}
+
+#download-examination {
+    color: #c00;
+}

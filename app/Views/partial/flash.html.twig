@@ -1,0 +1,13 @@
+{% if flash.getMessage('success') %}
+    <div class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Obaveštenje!</strong> {{ flash.getMessage('success')|first }}
+    </div>
+{% endif %}
+
+{% if flash.getMessage('error') %}
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Upozorenje!</strong> {{ flash.getMessage('error')|first }}
+    </div>
+{% endif %}

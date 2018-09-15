@@ -1,0 +1,11 @@
+p {
+    font-size:12px;
+    margin-top:15px;
+}
+img {
+    margin:auto;
+}
+.red-color-text {
+    color:#c00!important;
+    font-weight:bold!important;
+}

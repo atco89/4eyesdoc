@@ -1,0 +1,7 @@
+{% if associates is not null %}
+    {% for associate in associates %}
+        <option value="{{ associate.id }}">
+            {{ associate.dial_number.dial_number ~ associate.phone_number ~ ' ' ~ associate.name }}
+        </option>
+    {% endfor %}
+{% endif %}

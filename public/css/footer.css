@@ -1,0 +1,17 @@
+/* ===== footer ===== */
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 3px;
+    background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
+    border-top: 1px solid #ccc;
+    text-align: center;
+    z-index: 999;
+}
+
+footer a {
+    font-size: 13px;
+}

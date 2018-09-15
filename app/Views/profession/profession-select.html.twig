@@ -1,0 +1,5 @@
+{% if professions is not null %}
+    {% for profession in professions %}
+        <option value="{{ profession.id }}">{{ profession.profession_name }}</option>
+    {% endfor %}
+{% endif %}
