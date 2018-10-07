@@ -1,12 +1,12 @@
 {
   "name": "4eyesdoc",
-  "description": "Application for ophthalmic ordinations",
+  "description": "Application for ophthalmology practices.",
   "authors": [
     {
       "name": "Aleksandar Rakić",
       "email": "info@aleksandarrakic.com",
       "homepage": "http://www.aleksandarrakic.com",
-      "role": "Software engineer"
+      "role": "Product Owner, Software Architect, Developer"
     }
   ],
   "autoload": {
