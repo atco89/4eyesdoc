@@ -1,6 +1,17 @@
 {
-  "name": "4eyesdoc",
+  "name": "4EYESDOC",
   "description": "Application for ophthalmology practices.",
+  "version": "1.0.0",
+  "type": "project",
+  "keywords": [
+    "ophthalmology",
+    "scheduling",
+    "examinations",
+    "reports"
+  ],
+  "homepage": "http://www.4eyesdoc.rs",
+  "readme": "README.md",
+  "time": "2018-09-04",
   "authors": [
     {
       "name": "Aleksandar Rakić",
@@ -9,6 +20,9 @@
       "role": "Product Owner, Software Architect, Developer"
     }
   ],
+  "support": {
+    "email": "support@4eyesdoc.rs"
+  },
   "autoload": {
     "psr-4": {
       "App\\": "app"
@@ -23,5 +37,6 @@
     "respect/validation": "^1.1",
     "phpoffice/phpspreadsheet": "^1.2",
     "dompdf/dompdf": "^0.8.2"
-  }
+  },
+  "minimum-stability": "stable"
 }
