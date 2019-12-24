@@ -101,11 +101,6 @@ textarea#operater-comment {
     color: #000 !important;
 }
 
-.label {
-    padding: 2px 5px !important;
-    margin-right: 5px !important;
-}
-
 /* ===== font awesome icon style ===== */
 .fa-icon {
     font-size: 18px;
