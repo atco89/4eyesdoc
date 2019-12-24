@@ -1,6 +1,6 @@
 # 4EYESDOC
 
-[![N|Solid](public/media/icons/navigation-icon.png)](http://www.4eyesdoc.rs)
+[![N|Solid](src/public/media/icons/navigation-icon.png)](http://www.4eyesdoc.rs)
 
 Application for ophthalmic clinics. The program is capable of performing the following operations:
 
@@ -51,11 +51,11 @@ C:\wamp\www\4eyesdoc> php composer.phar install
 
 Step 2:
 
-Install database [tables](database/installation.sql) 
+Install database [tables](src/database/installation.sql) 
 
 Step 3:
  
-Install db [procedures](database/procedures.sql).
+Install db [procedures](src/database/procedures.sql).
 
 Step 4:
 

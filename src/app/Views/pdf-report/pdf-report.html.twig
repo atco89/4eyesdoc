@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Izveštaj lekara</title>
+        <meta charset="utf-8">
+        <link href="http://localhost/public/css/pdf-report.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <header>
+            <center>
+                <img src="{{ headerImage }}" alt="header-image" id="header-image">
+            </center>
+        </header>
+        <main>
+            <div id="container">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <h3 id="report-name">{{ template }}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="patient-informations">
+                            <tr>
+                                <th rowspan="2" class="align-middle">Ime i prezime:</th>
+                                <td rowspan="2" class="align-middle">
+                                    {{ data.appointment.patient.name ~ ' ' ~ data.appointment.patient.surname }}
+                                </td>
+                                <th>Godina rođenja:</th>
+                                <td>{{ data.appointment.patient.date_of_birth | date('d.m.Y') }}</td>
+                            </tr>
+                            <tr>
+                                <th>Datum pregleda:</th>
+                                <td>{{ data.appointment.start_date_time | date('d.m.Y H:i:s') }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="diagnosis">
+                            <tr>
+                                <th class="label-cell">Dijagnoza:</th>
+                                <td colspan="3">{{ data.diagnosis }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                {% if data.anamnesis is not null %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="anamnesis">
+                                <tr>
+                                    <th class="label-cell">Anamneza:</th>
+                                    <td colspan="3">
+                                        {% autoescape %}
+                                            {{ data.anamnesis|raw }}
+                                        {% endautoescape %}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% if (data.vod is not empty and data.vos is not empty)
+                            or (data.tod is not empty and data.tos is not empty)
+                            or (data.tod_c is not empty and data.tod_s is not empty)
+                            or (data.rod is not empty and data.ros is not empty)
+                            or (data.cct_od is not empty and data.cct_os is not empty)
+                            or (data.kf_od is not empty and data.kf_os is not empty)
+                            or (data.ar_od is not empty and data.ar_os is not empty)
+                            or (data.kr_od is not empty and data.kr_os is not empty)
+                            or data.motilitet_ou is not empty
+                            or (data.foko_f_od is not empty and data.foko_f_os is not empty)
+                            or (data.foko_k_od is not empty and data.foko_k_os is not empty)
+                            or (data.foko_n_od is not empty and data.foko_n_os is not empty)
+                            or (data.add_od is not empty and data.add_os is not empty) %}
+                            <table id="status-localis">
+                                <thead>
+                                <tr>
+                                    <th class="status-localis-headers" colspan="2">OD</th>
+                                    <th class="status-localis-headers" colspan="2">OS</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% if data.vod is not empty and data.vos is not empty %}
+                                    <tr>
+                                        <th>VOD</th>
+                                        <td>{{ data.vod }}</td>
+                                        <th>VOS</th>
+                                        <td>{{ data.vos }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if data.tod is not empty and data.tos is not empty %}
+                                    <tr>
+                                        <th>TOD</th>
+                                        <td>{{ data.tod }} mmHg</td>
+                                        <th>TOS</th>
+                                        <td>{{ data.tos }} mmHg</td>
+                                    </tr>
+                                {% endif %}
+                                {% if data.tod_c is not empty and data.tod_s is not empty %}
+                                    <tr>
+                                        <th>TODC</th>
+                                        <td>{{ data.tod_c }} mmHg</td>
+                                        <th>TODS</th>
+                                        <td>{{ data.tod_s }} mmHg</td>
+                                    </tr>
+                                {% endif %}
+                                {% if data.rod is not empty and data.ros is not empty %}
+                                    <tr>
+                                        <th>ROD</th>
+                                        <td>{{ data.rod }}</td>
+                                        <th>ROS</th>
+                                        <td>{{ data.ros }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if data.cct_od is not empty and data.cct_os is not empty %}
+                                    <tr>
+                                        <th>CCT</th>
+                                        <td>{{ data.cct_od }} nm</td>
+                                        <th>CCT</th>
+                                        <td>{{ data.cct_os }} nm</td>
+                                    </tr>
+                                {% endif %}
+                                {% if data.kf_od is not empty and data.kf_os is not empty %}
+                                    <tr>
+                                        <th>KF</th>
+                                        <td>{{ data.kf_od }} mmHg</td>
+                                        <th>KF</th>
+                                        <td>{{ data.kf_os }} mmHg</td>
+                                    </tr>
+                                {% endif %}
+                                {% if data.ar_od is not empty and data.ar_os is not empty %}
+                                    <tr>
+                                        <th>AR</th>
+                                        <td>{{ data.ar_od }}</td>
+                                        <th>AR</th>
+                                        <td>{{ data.ar_os }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if data.kr_od is not empty and data.kr_os is not empty %}
+                                    <tr>
+                                        <th>KR</th>
+                                        <td>{{ data.kr_od }}</td>
+                                        <th>KR</th>
+                                        <td>{{ data.kr_os }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if data.motilitet_ou is not empty %}
+                                    <tr>
+                                        <th>MOTILITET OU:</th>
+                                        <td colspan="3">{{ data.motilitet_ou }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if data.foko_f_od is not empty and data.foko_f_os is not empty %}
+                                    <tr>
+                                        <th>FOKO F</th>
+                                        <td>{{ data.foko_f_od }}</td>
+                                        <th>FOKO F</th>
+                                        <td>{{ data.foko_f_os }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if data.foko_k_od is not empty and data.foko_k_od is not empty %}
+                                    <tr>
+                                        <th>FOKO K</th>
+                                        <td>{{ data.foko_k_od }}</td>
+                                        <th>FOKO K</th>
+                                        <td>{{ data.foko_k_od }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if data.foko_n_od is not empty and data.foko_n_os is not empty %}
+                                    <tr>
+                                        <th>FOKO N</th>
+                                        <td>{{ data.foko_n_od }}</td>
+                                        <th>FOKO N</th>
+                                        <td>{{ data.foko_n_os }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if data.add_od is not empty and data.add_os is not empty %}
+                                    <tr>
+                                        <th>ADD</th>
+                                        <td>{{ data.add_od }}</td>
+                                        <th>ADD</th>
+                                        <td>{{ data.add_os }}</td>
+                                    </tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
+                            {% if data.ar_od_ar_os_measurement_method is not empty %}
+                                <p id="measurement-method">* {{ data.ar_od_ar_os_measurement_method }}</p>
+                            {% endif %}
+                        {% endif %}
+                        {% if data.lva is not empty %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="lva">
+                                        <tr>
+                                            <th class="label-cell">LVA</th>
+                                            <td>
+                                                {% autoescape %}
+                                                    {{ data.lva|raw }}
+                                                {% endautoescape %}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if data.slou is not empty or (data.slod is not empty and data.slos is not empty) %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    {% if data.slou is not empty %}
+                                        <table id="slou">
+                                            <tr>
+                                                <th class="label-cell">Prednji segment OU:</th>
+                                                <td colspan="3">{{ data.slou }}</td>
+                                            </tr>
+                                        </table>
+                                    {% else %}
+                                        <table id="slod">
+                                            <tr>
+                                                <th class="label-cell">Prednji segment OD:</th>
+                                                <td colspan="3">{{ data.slod }}</td>
+                                            </tr>
+                                        </table>
+                                        <table id="slos">
+                                            <tr>
+                                                <th class="label-cell">Prednji segment OS:</th>
+                                                <td colspan="3">{{ data.slos }}</td>
+                                            </tr>
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if data.fod is not empty or data.fos is not empty or data.fou is not empty %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    {% if data.fod is not empty %}
+                                        <table id="fod">
+                                            <tr>
+                                                <th class="label-cell">FOD:</th>
+                                                <td colspan="3">{{ data.fod }}</td>
+                                            </tr>
+                                        </table>
+                                    {% endif %}
+                                    {% if data.fos is not empty %}
+                                        <table id="fos">
+                                            <tr>
+                                                <th class="label-cell">FOS:</th>
+                                                <td colspan="3">{{ data.fos }}</td>
+                                            </tr>
+                                        </table>
+                                    {% endif %}
+                                    {% if data.fou is not empty %}
+                                        <table id="fou">
+                                            <tr>
+                                                <th class="label-cell">FOU:</th>
+                                                <td colspan="3">{{ data.fou }}</td>
+                                            </tr>
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if data.examination_conclusion is not empty
+                            or data.examination_advice is not empty
+                            or data.control_with_the_ophthalmologist is not empty
+                            or data.therapy_at_home is not empty %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    {% if data.examination_conclusion is not empty %}
+                                        <table id="conclusion">
+                                            <tr>
+                                                <th class="label-cell">Zaključak:</th>
+                                                <td colspan="3">{{ data.examination_conclusion }}</td>
+                                            </tr>
+                                        </table>
+                                    {% endif %}
+                                    {% if data.examination_advice is not empty %}
+                                        <table id="examination-advice">
+                                            <tr>
+                                                <th class="label-cell">Savet:</th>
+                                                <td colspan="3">{{ data.examination_advice }}</td>
+                                            </tr>
+                                        </table>
+                                    {% endif %}
+                                    {% if data.control_with_the_ophthalmologist is not empty %}
+                                        <table id="control-with-the-ophthalmologist">
+                                            <tr>
+                                                <th class="label-cell">Kontrola:</th>
+                                                <td colspan="3">{{ data.control_with_the_ophthalmologist }}</td>
+                                            </tr>
+                                        </table>
+                                    {% endif %}
+                                    {% if data.therapy_at_home is not empty %}
+                                        <table id="therapy-at-home">
+                                            <tr>
+                                                <th class="label-cell">Terapija:</th>
+                                                <td colspan="3">{{ data.therapy_at_home }}</td>
+                                            </tr>
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if data.kvp is not empty or data.kvp_conclusion is not empty or data.kvp_control is not empty %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h2>KVP</h2>
+                                    {% if data.kvp is not empty %}
+                                        <table id="kvp">
+                                            <tr>
+                                                <th class="label-cell">KVP</th>
+                                                <td>{{ data.kvp }}</td>
+                                            </tr>
+                                        </table>
+                                    {% endif %}
+                                    {% if data.kvp_conclusion is not empty %}
+                                        <table id="kvp-conclusion">
+                                            <tr>
+                                                <th class="label-cell">Zaključak</th>
+                                                <td>{{ data.kvp_conclusion }}</td>
+                                            </tr>
+                                        </table>
+                                    {% endif %}
+                                    {% if data.kvp_control is not empty %}
+                                        <table id="kvp-control">
+                                            <tr>
+                                                <th class="label-cell">Savet</th>
+                                                <td>{{ data.kvp_control }}</td>
+                                            </tr>
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            </div><br/>
+                        {% endif %}
+                        {% if data.oct_pno is not empty or data.oct_pno_conclusion is not empty or data.oct_pno_control is not empty %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h2>OCT PNO</h2>
+                                    {% if data.oct_pno is not empty %}
+                                        <table id="oct-pno">
+                                            <tr>
+                                                <th class="label-cell">OCT</th>
+                                                <td>{{ data.oct_pno }}</td>
+                                            </tr>
+                                        </table>
+                                    {% endif %}
+                                    {% if data.oct_pno_conclusion is not empty %}
+                                        <table id="oct-pno-conclusion">
+                                            <tr>
+                                                <th class="label-cell">Zaključak</th>
+                                                <td>{{ data.oct_pno_conclusion }}</td>
+                                            </tr>
+                                        </table>
+                                    {% endif %}
+                                    {% if data.oct_pno_control is not empty %}
+                                        <table id="oct-pno-control">
+                                            <tr>
+                                                <th class="label-cell">Savet</th>
+                                                <td>{{ data.oct_pno_control }}</td>
+                                            </tr>
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            </div><br/>
+                        {% endif %}
+                        {% if data.eye_ultrasound is not empty %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="eye-ultrasound">
+                                        <tr>
+                                            <th class="label-cell">Ultrazvuk oka</th>
+                                            <td>{{ data.eye_ultrasound }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div><br/>
+                        {% endif %}
+                        {% if data.meibomography is not empty %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="meibomography">
+                                        <tr>
+                                            <th class="label-cell">Meibomografija</th>
+                                            <td>{{ data.meibomography }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div><br/>
+                        {% endif %}
+                        {% if data.corneal_topography is not empty %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="corneal-topography">
+                                        <tr>
+                                            <th class="label-cell">Kornealna topografija</th>
+                                            <td>{{ data.corneal_topography }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="icd10">
+                                    <tr>
+                                        <th class="label-cell">ICD10:</th>
+                                        <td colspan="3">{{ data.icd10 | join(' | ') }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="signature">
+                                    <tr>
+                                        <td></td>
+                                        <td class="signature-field">
+                                            {{ data.appointment.doctor.group_role.role.title ~ ' ' ~ data.appointment.doctor.name ~ ' ' ~ data.appointment.doctor.surname }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td class="signature-field" id="signature-field"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="{{ displayFooterImage ? 'full-footer' : 'short-footer' }}">
+            <div class="row">
+                <div class="col-sm-12">
+                    {% if displayFooterImage %}
+                        <div id="footer-image-container">
+                            <img src="{{ footerImage }}" alt="footer-image" id="footer-image">
+                        </div>
+                    {% endif %}
+                    <p id="disclaimer">
+                        Pacijent je obavešten o dijagnozi i prognozi svoje bolesti, predloženoj medicinskoj meri, cilju,
+                        koristi kao i mogućim komplikacijama, rizicima i posledicama preduzimanja odnosno nepreduzimanja iste.
+                        Takođe, prihvata dijagnostičke i terapijske procedure koje su preduzete pri ovom pregledu.
+                        Izjavljuje da nema alergijskih i drugih rizika.
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,153 @@
+textarea#operater-comment {
+    height: 75px;
+    resize: none;
+}
+
+.btn {
+    border-radius: 2px;
+}
+
+.icon {
+    width: 15px;
+    margin-right: 20px;
+}
+
+.tab-pane .row {
+    margin: 2.5px 0;
+}
+
+.column {
+    padding-left: 2.5px;
+    padding-right: 2.5px;
+}
+
+.modal-body {
+    position: relative;
+}
+
+.required-field {
+    color: #c00;
+    font-weight: bold;
+}
+
+.well {
+    margin-bottom: 0;
+}
+
+.title,
+.price {
+    margin: 10px 0;
+}
+
+.title {
+    color: #0047b3;
+    text-transform: uppercase;
+}
+
+.price {
+    color: #cc0000;
+}
+
+#iris-msg-modal .modal-body {
+    text-align: center;
+}
+
+.img-center {
+    margin: auto auto 10px auto;
+}
+
+/** ================ medical examination status ================ */
+
+#medical-examination-statuses {
+    margin-top: 75px;
+}
+
+.scheduled-appointment,
+.notified-via-email,
+.confirmed,
+.canceled,
+.examination-ready-to-start,
+.done {
+    border-radius: 0;
+    border: 1px solid transparent !important;
+    font-weight: normal;
+    color: #fff !important;
+}
+
+.scheduled-appointment {
+    background-color: rgb(200, 200, 200) !important;
+    color: #000 !important;
+}
+
+.notified-via-email {
+    background-color: rgb(255, 0, 225) !important;
+    color: #000 !important;
+}
+
+.canceled {
+    background-color: rgb(0, 30, 225) !important;
+}
+
+.confirmed {
+    background-color: rgb(255, 175, 0) !important;
+}
+
+.examination-ready-to-start {
+    background-color: rgb(255, 0, 100) !important;
+}
+
+.done {
+    background-color: rgb(0, 255, 75) !important;
+    color: #000 !important;
+}
+
+.label {
+    padding: 2px 5px !important;
+    margin-right: 5px !important;
+}
+
+/* ===== font awesome icon style ===== */
+.fa-icon {
+    font-size: 18px;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.fa-icon-warning {
+    color: orange;
+}
+
+/* ===== calendar ===== */
+
+#calendar {
+    background-color: #fff;
+    margin: 0;
+    width: 100%;
+}
+
+td.ui-widget-content:not(.ui-state-highlight) {
+    cursor: pointer !important;
+    background: #f8f8f8 !important;
+}
+
+td.ui-widget-content:not(.ui-state-highlight):hover {
+    background: rgba(59, 170, 227, 0.4) !important;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight {
+    background: #ffef8f !important;
+}
+
+.fc-ltr .fc-axis,
+.fc-time-grid .fc-slats .ui-widget-content {
+    text-align: center;
+}
+
+.fc-time-grid-event .fc-time,
+.fc-time-grid-event .fc-title {
+    padding: 0;
+}
+
+.l-align {
+    text-align: left !important;
+}
