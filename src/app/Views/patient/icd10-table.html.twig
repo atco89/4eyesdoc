@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+    <link type="text/css" rel="stylesheet" href="css/iris-apk-style.css">
+    <link type="text/css" rel="stylesheet" href="css/cardboard.css">
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="js/4eyesdoc.1.0.0.min.js"></script>
+    <script type="text/javascript" src="js/default.js"></script>
+{% endblock %}
+{% block container %}
+    <table class="table table-hover table-striped table-condensed">
+        <thead>
+        <tr>
+            <th class="text-center">R.Br.</th>
+            <th class="text-center">Šifra</th>
+            <th class="text-center">Naziv</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if content is not empty %}
+            {% for content in content %}
+                <tr>
+                    <td class="text-center">{{ content.id }}</td>
+                    <td class="text-center">{{ content.code }}</td>
+                    <td class="text-left">{{ content.name }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+    {% if pagination is not empty %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                <li class="page-item">
+                    <a class="page-link" href="{{ path_for('patient.icd10.table', {'pageId':0}) }}">
+                        First
+                    </a>
+                </li>
+                {% for pagination in pagination %}
+                    {% if currentPage == pagination %}
+                    <li class="page-item active">
+                        <a class="page-link" href="{{ path_for('patient.icd10.table', {'pageId':pagination}) }}">
+                            {{ pagination + 1 }} <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ path_for('patient.icd10.table', {'pageId':pagination}) }}">
+                                {{ pagination + 1 }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path_for('patient.icd10.table', {'pageId':numberOfPages}) }}">
+                        Last
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\ICD10;
 use App\Repositories\Associates\AssociatesRepository;
 use App\Repositories\ContactPerson\ContactPersonRepository;
 use App\Repositories\DialNumbers\DialNumberRepository;
@@ -138,6 +139,26 @@ class PatientController
         return $this->container->view->render($response, 'patient/icd10-statistics.html.twig', [
             'title'       => 'Statistika ICD10 bolesti',
             'data_points' => $examinationICDRepository->loadStatistics()
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
+    public function icd10Table(Request $request, Response $response, array $args): Response
+    {
+        $pageId = isset($args['pageId']) ? intval($args['pageId']) : 0;
+        $icd10 = new ICD10($pageId);
+        /** @noinspection PhpUndefinedFieldInspection */
+        return $this->container->view->render($response, 'patient/icd10-table.html.twig', [
+            'title'         => 'Međunarodna klasifikacija bolesti',
+            'content'       => $icd10->queryData(),
+            'pagination'    => $icd10->pagination(),
+            'currentPage'   => $pageId,
+            'numberOfPages' => $icd10->getNumberOfPages(),
         ]);
     }
 
