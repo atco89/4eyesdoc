@@ -6,6 +6,7 @@ namespace App\Controllers;
 use App\Repositories\Associates\AssociatesRepository;
 use App\Repositories\ContactPerson\ContactPersonRepository;
 use App\Repositories\DialNumbers\DialNumberRepository;
+use App\Repositories\Examination\ExaminationICDRepository;
 use App\Repositories\Examination\ExaminationReport;
 use App\Repositories\Patient\CreatePatientProfile;
 use App\Repositories\Patient\PatientRepository;
@@ -122,6 +123,21 @@ class PatientController
             'patients'            => $patientRepository->loadActiveRegister(),
             'cardboard'           => $patientData->toArray(),
             'examinations'        => $examinationReport->loadCardboardById($id)
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+    public function icd10Statistics(Request $request, Response $response): Response
+    {
+        $examinationICDRepository = new ExaminationICDRepository($this->container);
+        /** @noinspection PhpUndefinedFieldInspection */
+        return $this->container->view->render($response, 'patient/icd10-statistics.html.twig', [
+            'title'       => 'Statistika ICD10 bolesti',
+            'data_points' => $examinationICDRepository->loadStatistics()
         ]);
     }
 

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+    <link type="text/css" rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <link type="text/css" rel="stylesheet" href="css/libs/date-picker/bootstrap-datepicker3.standalone.min.css">
+    <link type="text/css" rel="stylesheet" href="css/iris-apk-style.css">
+    <link type="text/css" rel="stylesheet" href="css/cardboard.css">
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="js/libs/date-picker/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="js/libs/date-picker/bootstrap-datepicker.sr-latin.min.js"></script>
+    <script type="text/javascript" src="js/4eyesdoc.1.0.0.min.js"></script>
+    <script type="text/javascript" src="js/cardboard.js"></script>
+    <script type="text/javascript" src="js/default.js"></script>
+    <script type="text/javascript" src="js/patient.js"></script>
+    <!--suppress JSUnresolvedFunction, ES6ConvertVarToLetConst -->
+    <script type="text/javascript">
+        window.onload = function () {
+            var options = {
+                title: {
+                    text: "Top 10 bolesti oka klasifikovanih ICD10"
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 45,
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabel: "{label} ({y})",
+                    yValueFormatString: "#,##0.#" % "",
+                    dataPoints: {{(data_points|json_encode|raw)}}
+                }]
+            };
+            $("#chartContainer").CanvasJSChart(options);
+        };
+    </script>
+{% endblock %}
+{% block container %}
+    <div id="chartContainer" style="height: 500px; width: 100%;"></div>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+{% endblock %}

@@ -12,9 +12,13 @@ use Illuminate\Database\Eloquent\Model;
 class EnumEyeDiseasesModel extends Model
 {
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $table = 'enum_eye_diseases';
-    /** @var bool */
+    /**
+     * @var bool
+     */
     public $timestamps = false;
 
 }

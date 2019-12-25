@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Repositories\Examination;
 
 use App\Models\TblExaminationReportsICDModel;
+use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\Eloquent\Builder;
 use Slim\Container;
 
@@ -49,6 +50,27 @@ class ExaminationICDRepository
             ->where('examination_report_id', '=', $id)
             ->map(function ($row) {
                 return $row->eyeDiseases->id;
+            })->toArray();
+    }
+
+    /**
+     * @param int $limit
+     * @return array
+     */
+    public function loadStatistics(int $limit = 10): array
+    {
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $this->loadModel(['examinationReport', 'eyeDiseases'])
+            ->select(['eye_diseases_id', DB::raw('count(eye_diseases_id) as count')])
+            ->groupBy('eye_diseases_id')
+            ->orderBy('count', 'desc')
+            ->limit($limit)->get()
+            ->map(function (TblExaminationReportsICDModel $model): array {
+                /** @noinspection PhpUndefinedFieldInspection */
+                return [
+                    'label' => $model->eyeDiseases->name,
+                    'y'     => $model->count
+                ];
             })->toArray();
     }
 

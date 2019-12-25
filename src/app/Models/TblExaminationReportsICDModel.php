@@ -13,9 +13,13 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class TblExaminationReportsICDModel extends Model
 {
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $table = 'tbl_examination_reports_icd';
-    /** @var bool */
+    /**
+     * @var bool
+     */
     public $timestamps = false;
 
     /**
@@ -33,5 +37,4 @@ class TblExaminationReportsICDModel extends Model
     {
         return $this->hasOne(EnumEyeDiseasesModel::class, 'id', 'eye_diseases_id');
     }
-
 }

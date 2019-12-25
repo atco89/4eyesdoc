@@ -29,6 +29,7 @@ $app->group(null, function () use ($app) {
     $app->any('/patients/cardboard/search', 'PatientController:search')->setName('patient.search');
     $app->any('/patients/cardboard/create', 'PatientController:create')->setName('patient.create');
     $app->any('/patients/cardboard/view/{id}', 'PatientController:edit')->setName('patient.edit');
+    $app->any('/patients/statistics/icd-10', 'PatientController:icd10Statistics')->setName('patient.icd10.statistics');
 
     // -------------------- user --------------------
     $app->any('/administration/user/register', 'UserController:index')->setName('user.index');
