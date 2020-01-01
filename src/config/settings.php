@@ -13,7 +13,7 @@ return [
         'templatesPath'                     => __DIR__ . '/../app/Views/',
         'displayFooterImage'                => true,
         'determineRouteBeforeAppMiddleware' => false,
-        'displayErrorDetails'               => false,
+        'displayErrorDetails'               => true,
         'db'                                => [
             'driver'    => 'mysql',
             'host'      => 'database',

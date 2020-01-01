@@ -25,9 +25,9 @@
     }
   },
   "require": {
-    "php": "7.4",
+    "php": "7.3.11",
     "slim/slim": "3.12.3",
-    "slim/twig-view": "3.0.0",
+    "slim/twig-view": "2.5.1",
     "slim/flash": "0.4.0",
     "illuminate/database": "6.8.0",
     "respect/validation": "1.1.31",

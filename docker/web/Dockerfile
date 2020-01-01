@@ -1,4 +1,4 @@
-FROM php:7.2.4-apache
+FROM php:7.3.11-apache
 
 MAINTAINER Aleksandar Rakić <info@aleksandarrakic.rs>
 
@@ -7,22 +7,21 @@ COPY ./docker/web/certs/server.key /etc/apache2/ssl/server.key
 
 COPY ./docker/web/config/dev.conf /etc/apache2/sites-enabled/000-default.conf
 
-RUN apt-get update \
-    && apt-get install -y \
+RUN apt-get update && apt-get install -y \
         libzip-dev \
         zlib1g-dev \
         unzip \
         libpng-dev \
         zlib1g-dev \
+        git \
     && docker-php-ext-install \
         pdo \
         pdo_mysql \
         zip \
         gd \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer \
-    && a2enmod rewrite \
-        ssl
+    && a2enmod rewrite ssl
 
 WORKDIR /var/www/html/
 
-EXPOSE 443
+EXPOSE 80 443

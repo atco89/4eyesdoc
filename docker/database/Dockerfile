@@ -9,8 +9,7 @@ MAINTAINER Aleksandar Rakić <info@aleksandarrakic.rs>
 COPY ./docker/database/dump/ /docker-entrypoint-initdb.d/
 
 # update and install required os packages
-RUN apt-get update \
-    && apt-get install -y
+RUN apt-get update && apt-get install -y
 
 # make port 3306 available to the world outside this container
 EXPOSE 3306
