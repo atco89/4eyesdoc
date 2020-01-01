@@ -34,6 +34,7 @@ use Slim\Container;
 use Slim\Flash\Messages;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
+use Twig\TwigFilter;
 
 /* @var Container $container */
 $container = $app->getContainer();
@@ -72,7 +73,7 @@ $container['view'] = function (Container $container): Twig {
     $view->getEnvironment()->addGlobal('roleId', isset($_SESSION['role_id']) ? $_SESSION['role_id'] : null);
     $view->getEnvironment()->addGlobal('role', isset($_SESSION['role_title']) ? $_SESSION['role_title'] : null);
 
-    $view->getEnvironment()->addFilter(new Twig_Filter('age', function (?string $dateOfBirth) {
+    $view->getEnvironment()->addFilter(new TwigFilter('age', function (?string $dateOfBirth) {
         if (empty($dateOfBirth))
             return null;
 
@@ -80,14 +81,14 @@ $container['view'] = function (Container $container): Twig {
         return $age > 0 ? $age : null;
     }));
 
-    $view->getEnvironment()->addFilter(new Twig_Filter('number_format', function (?string $number) {
+    $view->getEnvironment()->addFilter(new TwigFilter('number_format', function (?string $number) {
         if (empty($number))
             return null;
 
         return empty($number) ? null : number_format(floatval($number), 2);
     }));
 
-    $view->getEnvironment()->addFilter(new Twig_Filter('br2nl', function (?string $comment) {
+    $view->getEnvironment()->addFilter(new TwigFilter('br2nl', function (?string $comment) {
         return empty($comment) ? null : preg_replace('/<br\\s*?\/??>/i', '', $comment);
     }));
 
