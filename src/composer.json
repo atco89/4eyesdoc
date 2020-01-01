@@ -1,6 +1,6 @@
 {
   "description": "Application for ophthalmology practices.",
-  "version": "1.0.0",
+  "version": "1.1",
   "type": "project",
   "keywords": [
     "ophthalmology",
@@ -10,32 +10,29 @@
   ],
   "homepage": "http://www.4eyesdoc.rs",
   "readme": "README.md",
-  "time": "2018-09-04",
+  "time": "2020-01-15",
   "authors": [
     {
       "name": "Aleksandar Rakić",
-      "email": "info@aleksandarrakic.com",
-      "homepage": "http://www.aleksandarrakic.com",
+      "email": "info@aleksandarrakic.rs",
+      "homepage": "http://www.aleksandarrakic.rs",
       "role": "Product Owner, Software Architect, Developer"
     }
   ],
-  "support": {
-    "email": "support@4eyesdoc.rs"
-  },
   "autoload": {
     "psr-4": {
       "App\\": "app"
     }
   },
   "require": {
-    "php": "^7.2.4",
-    "slim/slim": "^3.0",
-    "slim/twig-view": "^2.4",
-    "slim/flash": "^0.4.0",
-    "illuminate/database": "~5.1",
-    "respect/validation": "^1.1",
-    "phpoffice/phpspreadsheet": "^1.2",
-    "dompdf/dompdf": "^0.8.2"
+    "php": "7.4",
+    "slim/slim": "3.12.3",
+    "slim/twig-view": "3.0.0",
+    "slim/flash": "0.4.0",
+    "illuminate/database": "6.8.0",
+    "respect/validation": "1.1.31",
+    "phpoffice/phpspreadsheet": "1.10.1",
+    "dompdf/dompdf": "0.8.3"
   },
   "minimum-stability": "stable"
 }

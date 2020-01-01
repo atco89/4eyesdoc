@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\XML;
 
-use App\Repositories\Appointment\AppointmentsRepository;
 use Slim\Container;
 
 /**
@@ -28,8 +27,8 @@ class AppointmentsRegisterXMLExport extends XMLExport
     public function run(): void
     {
         $data = [];
-        $appointmentsRepository = new AppointmentsRepository($this->container);
-        foreach ($appointmentsRepository->loadExport() as $row) {
+//        $appointmentsRepository = new AppointmentsRepository($this->container);
+        foreach ($_SESSION['appointments'] as $row) {
             $data[] = [
                 'Sifra'         => $row['id'],
                 'Ime'           => $row['name'],
@@ -40,7 +39,7 @@ class AppointmentsRegisterXMLExport extends XMLExport
                 'NazivPregleda' => $row['exam_name'],
                 'CenaPregleda'  => $row['exam_price'],
                 'Pocetak'       => $row['start_date_time'],
-                'Izmenjeno'     => $row['updated_at']->format('Y-m-d H:i:s'),
+                'Izmenjeno'     => $row['updated_at'],
                 'Izmenio'       => $row['updated_by'],
             ];
         }

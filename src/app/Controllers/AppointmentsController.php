@@ -92,16 +92,19 @@ class AppointmentsController
         $appointmentSearch = new AppointmentSearch($this->container);
         $foundedReports = $appointmentSearch->run($request);
 
-        foreach ($foundedReports as $report)
+        foreach ($foundedReports as $report) {
             $appointments[] = $report->id;
+        }
 
+        $_SESSION['appointments'] = $appointmentsRepository->searchAppointments($appointments, $examinationEditPeriod);
 
+        /** @noinspection PhpUndefinedFieldInspection */
         return $this->container->view->render($response, 'appointment/appointment-register.html.twig', [
             'title'           => 'Registar pregleda',
             'allowEditPeriod' => $examinationEditPeriod,
             'doctors'         => $userRepository->loadAssignedDoctors(),
             'templates'       => $examinationTemplateRepository->loadActiveTemplates(),
-            'appointments'    => $appointmentsRepository->searchAppointments($appointments, $examinationEditPeriod)
+            'appointments'    => $_SESSION['appointments']
         ]);
     }
 
