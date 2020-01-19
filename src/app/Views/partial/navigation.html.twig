@@ -24,27 +24,61 @@
                 </li>
                 <li>
                     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
-                        <i class="fa fa-folder-open nav-icon" aria-hidden="true"></i> Kartoteka <span class="caret"></span>
+                        <i class="fa fa-folder-open nav-icon" aria-hidden="true"></i> Kartoteka <span
+                                class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ path_for('patient.create') }}" title="Registar korisnika">Otvaranje kartona</a></li>
-                        <li><a href="{{ path_for('patient.index') }}" title="Kreiranje profila korisnika">Registar pacijenata</a></li>
-                        <li><a href="{{ path_for('patient.icd10.statistics') }}" title="Statistika ICD10 bolesti">Statistika ICD10 bolesti</a></li>
-                        <li><a href="{{ path_for('patient.icd10.table', {'pageId': '0'}) }}" title="Međunarodna klasifikacija bolesti">
+                        <li><a href="{{ path_for('patient.create') }}" title="Registar korisnika">Otvaranje kartona</a>
+                        </li>
+                        <li><a href="{{ path_for('patient.index') }}" title="Kreiranje profila korisnika">Registar
+                                pacijenata</a></li>
+                        <li><a href="{{ path_for('patient.icd10.statistics') }}" title="Statistika ICD10 bolesti">Statistika
+                                ICD10 bolesti</a></li>
+                        <li><a href="{{ path_for('patient.icd10.table', {'pageId': '0'}) }}"
+                               title="Međunarodna klasifikacija bolesti">
                                 Međunarodna klasifikacija bolesti
                             </a>
                         </li>
                     </ul>
                 </li>
+
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+                        <i class="fas fa-file-medical-alt nav-icon"></i> Izveštaji <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ path_for('income.report.examination') }}" title="Izveštaj o prihodima">
+                                Izveštaj o prihodima po vrsti pregleda
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path_for('income.report.patient') }}" title="Izveštaj o prihodima po pacijentu">
+                                Izveštaj o prihodima po pacijentu
+                            </a>
+                        </li>
+                        <li>
+                            <!--suppress HtmlUnknownTarget -->
+                            <a href="/storage/application-specification.pdf" title="Specifikacija aplikacije" target="_blank">
+                                Specifikacija aplikacije
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
                         <i class="fa fa-cog nav-icon" aria-hidden="true"></i> Administracija <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ path_for('user.create') }}" title="Kreiranje profila korisnika">Kreiranje profila korisnika</a></li>
-                        <li><a href="{{ path_for('user.index') }}" title="Registar korisnika">Registar korisnika</a></li>
-                        <li><a href="{{ path_for('schedule.index') }}" title="Raspored rada lekara">Raspored rada lekara</a></li>
-                        <li><a href="{{ path_for('user.password') }}" title="Administracija loznike">Administracija loznike</a></li>
+                        <li><a href="{{ path_for('user.create') }}" title="Kreiranje profila korisnika">Kreiranje
+                                profila korisnika</a></li>
+                        <li><a href="{{ path_for('user.index') }}" title="Registar korisnika">Registar korisnika</a>
+                        </li>
+                        <li><a href="{{ path_for('schedule.index') }}" title="Raspored rada lekara">Raspored rada
+                                lekara</a></li>
+                        <li><a href="{{ path_for('user.password') }}" title="Administracija loznike">Administracija
+                                loznike</a></li>
                     </ul>
                 </li>
             </ul>

@@ -4,14 +4,14 @@ declare(strict_types=1);
 use Slim\App;
 use Slim\Container;
 
-session_start();
-error_reporting(0);
-
 // extended session duration
+session_save_path(__DIR__ . '/../sessions');
 $duration = 8 * 60 * 60;
 session_set_cookie_params($duration);
-session_save_path(__DIR__ . '/../sessions');
 ini_set('session.gc_maxlifetime', "$duration");
+
+session_start();
+error_reporting(E_ALL);
 
 require __DIR__ . '/../vendor/autoload.php';
 $settings = require __DIR__ . '/../config/settings.php';

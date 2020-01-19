@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block scripts %}
+    <script>
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                title: {
+                    text: "Grafički prikaz izveštaja o prihodima po vrsti pregleda"
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 240,
+                    yValueFormatString: "#,##0.00 RSD",
+                    indexLabel: "{label} {y}",
+                    dataPoints: {{ (chart_data|json_encode|raw) }}
+                }]
+            });
+            chart.render();
+        }
+    </script>
+{% endblock %}
+{% block container %}
+    <div id="chartContainer" style="height: 500px; width: 100%;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+{% endblock %}

@@ -9,6 +9,7 @@ use App\Controllers\ErrorPagesController;
 use App\Controllers\ExaminationController;
 use App\Controllers\PatientController;
 use App\Controllers\ProfessionController;
+use App\Controllers\ReportsController;
 use App\Controllers\RoleController;
 use App\Controllers\UserController;
 use App\Controllers\WorkScheduleController;
@@ -213,4 +214,9 @@ $container['UserWorkScheduleXMLExport'] = function (Container $container): UserW
 
 $container['AppointmentsRegisterXMLExport'] = function (Container $container): AppointmentsRegisterXMLExport {
     return new AppointmentsRegisterXMLExport($container);
+};
+
+/* ========== reports ========== */
+$container['ReportsController'] = function (Container $container): ReportsController {
+    return new ReportsController($container);
 };

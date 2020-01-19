@@ -45,6 +45,22 @@ $app->group(null, function () use ($app) {
     $app->any('/administration/user/schedule/delete/{id}', 'WorkScheduleController:delete')->setName('schedule.remove');
     $app->any('/administration/user/schedule/modal', 'WorkScheduleController:deleteScheduleConfirmation');
 
+    // -------------------- reports --------------------
+    $app->get('/reports/income-by-examination', 'ReportsController:incomeReportByExaminationType')
+        ->setName('income.report.examination');
+    $app->post('/reports/income-by-examination/filter', 'ReportsController:incomeReportByExaminationTypeReportTable')
+        ->setName('income.report.examination.filter');
+    $app->get('/reports/income-by-examination/chart/{start_date}/{end_date}', 'ReportsController:incomeReportByExaminationTypeChart')
+        ->setName('income.report.examination.chart');
+
+
+    $app->get('/reports/income-by-patient', 'ReportsController:incomeReportByPatient')
+        ->setName('income.report.patient');
+    $app->post('/reports/income-by-patient/filter', 'ReportsController:incomeReportByPatientReportTable')
+        ->setName('income.report.patient.filter');
+    $app->get('/reports/income-by-patient/chart/{start_date}/{end_date}', 'ReportsController:incomeReportByPatientChart')
+        ->setName('income.report.patient.chart');
+
     // -------------------- partial --------------------
     $app->any('/partial/appointments/schedule', 'AppointmentsController:schedule');
     $app->any('/partial/appointments/expired', 'AppointmentsController:expired');

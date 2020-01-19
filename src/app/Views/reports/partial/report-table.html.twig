@@ -1,0 +1,39 @@
+<div class="btn-group mb-5">
+    <button class="btn btn-primary" data-toggle="modal" data-target="#modal">
+        <i class="fas fa-filter"></i> Filteri
+    </button>
+    <a href="{{ chart_uri }}" id="chart-button" class="btn btn-warning">
+        <i class="fas fa-chart-pie"></i> Grafički prikaz
+    </a>
+</div>
+{% if start_date is not empty and end_date is not empty %}
+    <p class="lead text-danger"><i class="fas fa-info-circle"></i>
+        Tabelarni prikaz prihoda za period {{ start_date|date('d.m.Y') }} - {{ end_date|date('d.m.Y') }}
+    </p>
+{% endif %}
+<table id="report-table" class="table table-hover table-striped table-condensed">
+    <thead>
+    <tr>
+        <th class="text-center">R. Br.</th>
+        <th class="text-center">Naziv</th>
+        <th class="text-center">Ukupno</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if report_data is empty %}
+        <tr>
+            <td class="text-center" colspan="3">Nema podataka</td>
+        </tr>
+    {% else %}
+        {% for record in report_data %}
+            <tr>
+                <td class="text-center"></td>
+                <td class="text-left">{{ record.label }}</td>
+                <td class="text-right" data-sort="{{ record.y }}">
+                    {{ record.y|number_format }} RSD
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>

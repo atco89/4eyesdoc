@@ -1,0 +1,31 @@
+<!-- Modal -->
+<div id="modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class="fas fa-filter"></i> Filteri</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="date-start">Datum početka:</label>
+                        <input type="date" class="form-control" placeholder="Datum početka" id="start-date"
+                               name="date-start">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="date-end">Datum kraja:</label>
+                        <input type="date" class="form-control" placeholder="Datum kraja" id="end-date"
+                               name="date-end">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Otkaži</button>
+                <a href="{{ filter_uri }}" id="apply-filters" class="btn btn-primary"
+                   data-dismiss="modal">Primeni</a>
+            </div>
+        </div>
+    </div>
+</div>

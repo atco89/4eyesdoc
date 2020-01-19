@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/iris-apk-style.css">
+    <link type="text/css" rel="stylesheet" href="css/reports.css">
+{% endblock %}
+{% block scripts %}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="js/4eyesdoc.1.0.0.min.js"></script>
+    <script src="js/data-table.js"></script>
+    <script src="js/reports-module.js"></script>
+    <script src="js/reports.js"></script>
+{% endblock %}
+{% block container %}
+    {% include 'reports/partial/modal.html.twig' %}
+    <div class="row">
+        <div id="report-table-container" class="col-12">
+            {% include 'reports/partial/report-table.html.twig' %}
+        </div>
+    </div>
+{% endblock %}
