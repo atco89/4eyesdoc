@@ -44,7 +44,12 @@ final class ReportsController
     public function incomeReportByExaminationType(Request $request, Response $response): Response
     {
         $reports = new Reports($this->container);
-        $incomeReportByExaminationType = $reports->incomeReportByExaminationType();
+        $data = $reports->incomeReportByExaminationType(null, null);
+        foreach ($data as $key => &$record) {
+            $record->y = intval($record->y);
+        }
+
+
         /** @noinspection PhpUndefinedFieldInspection */
         return $this->container->view->render($response, 'reports/income-report.html.twig', [
             'title'       => 'Izveštaj o prihodima po vrsti pregledu',
@@ -53,7 +58,7 @@ final class ReportsController
                 'start_date' => 'null',
                 'end_date'   => 'null',
             ]),
-            'report_data' => $incomeReportByExaminationType,
+            'report_data' => $data,
         ]);
     }
 
@@ -74,14 +79,19 @@ final class ReportsController
         $endDateTime = in_array($endDate, ['null', null]) ? null : new DateTime($endDate);
 
         $reports = new Reports($this->container);
-        $incomeReportByExaminationType = $reports->incomeReportByExaminationType($startDateTime, $endDateTime);
+        $data = $reports->incomeReportByExaminationType($startDateTime, $endDateTime);
+        foreach ($data as $key => &$record) {
+            if ($key === 'y') {
+                $record = intval($record);
+            }
+        }
         /** @noinspection PhpUndefinedFieldInspection */
         return $this->container->view->fetch('reports/partial/report-table.html.twig', [
             'chart_uri'   => $this->container->router->pathFor('income.report.examination.chart', [
                 'start_date' => empty($startDate) ? 'null' : $startDate,
                 'end_date'   => empty($endDate) ? 'null' : $endDate,
             ]),
-            'report_data' => $incomeReportByExaminationType,
+            'report_data' => $data,
         ]);
     }
 
@@ -102,15 +112,19 @@ final class ReportsController
         $startDateTime = in_array($startDate, ['null', null]) ? null : new DateTime($startDate);
         $endDateTime = in_array($endDate, ['null', null]) ? null : new DateTime($endDate);
 
+
         $reports = new Reports($this->container);
-        $incomeReportByExaminationType = $reports->incomeReportByExaminationType($startDateTime, $endDateTime);
+        $data = $reports->incomeReportByExaminationType($startDateTime, $endDateTime);
+        foreach ($data as $key => &$record) {
+            $record->y = intval($record->y);
+        }
         /** @noinspection PhpUndefinedFieldInspection */
         return $this->container->view->render($response, 'reports/income-chart.html.twig', [
             'title'          => 'Grafički prikaz izveštaja o prihodima',
             'showLoader'     => false,
             'showNavigation' => false,
             'showPageTitle'  => false,
-            'chart_data'     => $incomeReportByExaminationType
+            'chart_data'     => $data
         ]);
     }
 
